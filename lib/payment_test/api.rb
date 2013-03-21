@@ -5,12 +5,14 @@ require 'killbill/payment'
 module PaymentTest
   class PaymentPlugin < Killbill::Plugin::Payment
 
+
     def start_plugin
       super
     end
 
     def initialize(*args)
       @raise_exception = false
+      super(*args)
     end
 
     def get_name
