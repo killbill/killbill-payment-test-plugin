@@ -20,7 +20,7 @@ describe PaymentTest::PaymentPlugin do
 
   it "should should test charge " do
 
-    output = @plugin.charge(@kb_payment_id, @kb_payment_method_id, @amount_in_cents)
+    output = @plugin.process_payment(@kb_payment_id, @kb_payment_method_id, @amount_in_cents)
 
     output.should be_an_instance_of Killbill::Plugin::PaymentResponse
     output.amount_in_cents.should == @amount_in_cents
