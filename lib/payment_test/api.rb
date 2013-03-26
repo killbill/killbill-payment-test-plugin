@@ -18,15 +18,15 @@ module PaymentTest
     def get_name
     end
 
-    def process_payment(kb_payment_id, kb_payment_method_id, amount_in_cents, options = {})
+    def process_payment(kb_account_id, kb_payment_id, kb_payment_method_id, amount_in_cents, currency, options = {})
       res = Killbill::Plugin::PaymentResponse.new(amount_in_cents, DateTime.now, DateTime.now, Killbill::Plugin::PaymentStatus::SUCCESS, "gateway_error", "gateway_error_code")
     end
 
-    def get_payment_info(kb_payment_id, options = {})
+    def get_payment_info(kb_account_id, kb_payment_id, options = {})
         Killbill::Plugin::PaymentResponse.new(0, DateTime.now, DateTime.now, Killbill::Plugin::PaymentStatus::SUCCESS, "gateway_error", "gateway_error_code")
     end
 
-    def process_refund(kb_payment_id, amount_in_cents, options = {})
+    def process_refund(kb_account_id, kb_payment_id, amount_in_cents, currency, options = {})
         Killbill::Plugin::RefundResponse.new(amount_in_cents, DateTime.now, DateTime.now, Killbill::Plugin::PaymentStatus::SUCCESS, "gateway_error", "gateway_error_code")
     end
 
@@ -34,21 +34,21 @@ module PaymentTest
       nil
     end
 
-    def delete_payment_method(kb_payment_method_id, options = {})
+    def delete_payment_method(kb_account_id, kb_payment_method_id, options = {})
     end
 
     def get_payment_method_detail(kb_account_id, kb_payment_method_id, options = {})
         Killbill::Plugin::PaymentMethodResponse.new("foo", true, [])
     end
 
-    def set_default_payment_method(kb_payment_method_id, options = {})
+    def set_default_payment_method(kb_account_id, kb_payment_method_id, options = {})
     end
 
     def get_payment_methods(kb_account_id, refresh_from_gateway, options = {})
         [Killbill::Plugin::PaymentMethodResponseInternal.new(kb_account_id, kb_account_id, true, "external_payment_method_id")]
     end
 
-    def reset_payment_methods(payment_methods)
+    def reset_payment_methods(kb_account_id, payment_methods)
     end
 
     def raise_exception_on_next_calls
