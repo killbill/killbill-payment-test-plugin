@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.rdoc_options << '--exclude' << '.'
 
   s.add_dependency 'killbill', '~> 1.0.13'
-  s.add_dependency 'activemerchant', '~> 1.29.3'
   s.add_dependency 'sinatra', '~> 1.3.4'
 
   s.add_development_dependency 'jbundler', '~> 0.4.1'
