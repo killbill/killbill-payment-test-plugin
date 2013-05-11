@@ -22,3 +22,5 @@ Jarfile.lock
 Gemfile.lock
 *.swp
 killbill-payment-test
+
+.DS_Store
