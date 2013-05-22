@@ -25,8 +25,9 @@
     <groupId>com.ning.killbill.ruby</groupId>
     <artifactId>payment-test-plugin</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <name>payment-test-plugin</name>
+    <description></description>
     <scm>
         <connection>scm:git:git://github.com/killbill/killbill-payment-test-plugin.git</connection>
         <url>https://github.com/killbill/killbill-payment-test-plugin/</url>
