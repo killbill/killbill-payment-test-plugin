@@ -18,41 +18,40 @@ module PaymentTest
     def get_name
     end
 
-    def process_payment(kb_account_id, kb_payment_id, kb_payment_method_id, amount_in_cents, currency, options = {})
-
+    def process_payment(kb_account_id, kb_payment_id, kb_payment_method_id, amount_in_cents, currency, call_context, options = {})
       # Make an API call from the payment call
       account = @kb_apis.get_account_by_id(kb_account_id)
       puts "process_payment got ACCOUNT #{account.inspect}"
       Killbill::Plugin::Model::PaymentInfoPlugin.new(amount_in_cents, DateTime.now, DateTime.now, Killbill::Plugin::Model::PaymentPluginStatus.new(:PROCESSED), "gateway_error", "gateway_error_code", nil, nil)
     end
 
-    def get_payment_info(kb_account_id, kb_payment_id, options = {})
+    def get_payment_info(kb_account_id, kb_payment_id, tenant_context, options = {})
         Killbill::Plugin::Model::PaymentInfoPlugin.new(0, DateTime.now, DateTime.now, Killbill::Plugin::Model::PaymentPluginStatus.new(:PROCESSED), "gateway_error", "gateway_error_code", nil, nil)
     end
 
-    def process_refund(kb_account_id, kb_payment_id, amount_in_cents, currency, options = {})
+    def process_refund(kb_account_id, kb_payment_id, amount_in_cents, currency, call_context, options = {})
       Killbill::Plugin::Model::RefundInfoPlugin.new(amount_in_cents, DateTime.now, DateTime.now, Killbill::Plugin::Model::RefundPluginStatus.new(:PROCESSED), "gateway_error", "gateway_error_code", nil)
     end
 
-    def get_refund_info(kb_account_id, kb_payment_id, options = {})
+    def get_refund_info(kb_account_id, kb_payment_id, tenant_context, options = {})
       Killbill::Plugin::Model::RefundInfoPlugin.new(amount_in_cents, DateTime.now, DateTime.now, illbill::Plugin::Model::RefundPluginStatus.new(:PROCESSED), "gateway_error", "gateway_error_code", nil)
     end
 
-    def add_payment_method(kb_account_id, kb_payment_method_id, payment_method_props, set_default, options = {})
+    def add_payment_method(kb_account_id, kb_payment_method_id, payment_method_props, set_default, call_context, options = {})
       nil
     end
 
-    def delete_payment_method(kb_account_id, kb_payment_method_id, options = {})
+    def delete_payment_method(kb_account_id, kb_payment_method_id, call_context, options = {})
     end
 
-    def get_payment_method_detail(kb_account_id, kb_payment_method_id, options = {})
+    def get_payment_method_detail(kb_account_id, kb_payment_method_id, tenant_context, options = {})
       Killbill::Plugin::Model::PaymentMethodPlugin.new("foo", true, [], nil, "type", "cc_name", "cc_type", "cc_expiration_month", "cc_expiration_year", "cc_last4", "address1", "address2", "city", "state", "zip", "country")
     end
 
-    def set_default_payment_method(kb_account_id, kb_payment_method_id, options = {})
+    def set_default_payment_method(kb_account_id, kb_payment_method_id, call_context, options = {})
     end
 
-    def get_payment_methods(kb_account_id, refresh_from_gateway, options = {})
+    def get_payment_methods(kb_account_id, refresh_from_gateway, call_context, options = {})
       [Killbill::Plugin::Model::PaymentMethodInfoPlugin.new(kb_account_id, kb_account_id, true, "external_payment_method_id")]
     end
 
