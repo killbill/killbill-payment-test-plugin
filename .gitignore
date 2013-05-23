@@ -24,3 +24,4 @@ Gemfile.lock
 killbill-payment-test
 
 .DS_Store
+pom.xml.asc
