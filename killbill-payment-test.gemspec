@@ -3,16 +3,16 @@ version = File.read(File.expand_path('../VERSION', __FILE__)).strip
 Gem::Specification.new do |s|
   s.name        = 'killbill-payment-test'
   s.version     = version
-  s.summary     = 'Plugin to test payment plugin api'
-  s.description = 'Killbill Plugin to test payment plugin api'
+  s.summary     = 'Plugin to test the payment plugin api.'
+  s.description = 'Kill Bill Plugin to test the payment plugin api.'
 
   s.required_ruby_version = '>= 1.9.3'
 
   s.license = 'Apache License (2.0)'
 
-  s.author   = 'Killbill core team'
+  s.author   = 'Kill Bill core team'
   s.email    = 'killbilling-users@googlegroups.com'
-  s.homepage = 'http://www.killbilling.org'
+  s.homepage = 'http://kill-bill.org'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.rdoc_options << '--exclude' << '.'
 
-  s.add_dependency 'killbill', '~> 1.0.17'
+  s.add_dependency 'killbill', '~> 1.0.19'
   s.add_dependency 'sinatra', '~> 1.3.4'
 
   s.add_development_dependency 'jbundler', '~> 0.4.1'
