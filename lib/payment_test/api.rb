@@ -45,14 +45,14 @@ module PaymentTest
     end
 
     def get_payment_method_detail(kb_account_id, kb_payment_method_id, tenant_context, options = {})
-      Killbill::Plugin::Model::PaymentMethodPlugin.new("foo", true, [], nil, "type", "cc_name", "cc_type", "cc_expiration_month", "cc_expiration_year", "cc_last4", "address1", "address2", "city", "state", "zip", "country")
+      Killbill::Plugin::Model::PaymentMethodPlugin.new("external_payment_method_id", false, [], nil, "Test", "cc_name", "cc_type", "cc_expiration_month", "cc_expiration_year", "cc_last4", "address1", "address2", "city", "state", "zip", "country")
     end
 
     def set_default_payment_method(kb_account_id, kb_payment_method_id, call_context, options = {})
     end
 
     def get_payment_methods(kb_account_id, refresh_from_gateway, call_context, options = {})
-      [Killbill::Plugin::Model::PaymentMethodInfoPlugin.new(kb_account_id, kb_account_id, true, "external_payment_method_id")]
+      [Killbill::Plugin::Model::PaymentMethodInfoPlugin.new(kb_account_id, kb_account_id, false, "external_payment_method_id")]
     end
 
     def reset_payment_methods(kb_account_id, payment_methods)
