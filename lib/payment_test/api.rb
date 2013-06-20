@@ -20,10 +20,7 @@ module PaymentTest
 
     def process_payment(kb_account_id, kb_payment_id, kb_payment_method_id, amount, currency, call_context, options = {})
       # Make an API call from the payment call
-      puts "process_payment before call to get account "
-
       account = @kb_apis.account_user_api.get_account_by_id(kb_account_id, @kb_apis.create_context)
-      puts "process_payment got ACCOUNT #{account.inspect}"
       res = Killbill::Plugin::Model::PaymentInfoPlugin.new
       res.amount= amount
       res.created_date= DateTime.now
@@ -68,7 +65,6 @@ module PaymentTest
     end
 
     def add_payment_method(kb_account_id, kb_payment_method_id, payment_method_props, set_default, call_context, options = {})
-      puts "Enterered add_payment_method"
       nil
     end
 
