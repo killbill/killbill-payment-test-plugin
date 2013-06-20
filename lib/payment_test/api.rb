@@ -21,14 +21,13 @@ module PaymentTest
     def process_payment(kb_account_id, kb_payment_id, kb_payment_method_id, amount, currency, call_context, options = {})
       # Make an API call from the payment call
       account = @kb_apis.account_user_api.get_account_by_id(kb_account_id, @kb_apis.create_context)
-      puts "process_payment got ACCOUNT #{account.inspect}"
       res = Killbill::Plugin::Model::PaymentInfoPlugin.new
       res.amount= amount
       res.created_date= DateTime.now
-      res.effective_date== DateTime.now
+      res.effective_date= DateTime.now
       res.status=:PROCESSED
       res.gateway_error="gateway_error"
-      res.gateway_error_code=="gateway_error_code"
+      res.gateway_error_code="gateway_error_code"
       res
     end
 
@@ -36,10 +35,10 @@ module PaymentTest
         res = Killbill::Plugin::Model::PaymentInfoPlugin.new
         res.amount= 0
         res.created_date= DateTime.now
-        res.effective_date== DateTime.now
+        res.effective_date= DateTime.now
         res.status=:PROCESSED
         res.gateway_error="gateway_error"
-        res.gateway_error_code=="gateway_error_code"
+        res.gateway_error_code="gateway_error_code"
         res
     end
 
@@ -47,10 +46,10 @@ module PaymentTest
       res = Killbill::Plugin::Model::RefundInfoPlugin.new
       res.amount= amount
       res.created_date= DateTime.now
-      res.effective_date== DateTime.now
+      res.effective_date=DateTime.now
       res.status=:PROCESSED
       res.gateway_error="gateway_error"
-      res.gateway_error_code=="gateway_error_code"
+      res.gateway_error_code="gateway_error_code"
       res
     end
 
@@ -58,10 +57,10 @@ module PaymentTest
       res = Killbill::Plugin::Model::RefundInfoPlugin.new
       res.amount= 0
       res.created_date= DateTime.now
-      res.effective_date== DateTime.now
+      res.effective_date=DateTime.now
       res.status=:PROCESSED
       res.gateway_error="gateway_error"
-      res.gateway_error_code=="gateway_error_code"
+      res.gateway_error_code="gateway_error_code"
       res
     end
 
@@ -75,8 +74,7 @@ module PaymentTest
     def get_payment_method_detail(kb_account_id, kb_payment_method_id, tenant_context, options = {})
       res = Killbill::Plugin::Model::PaymentMethodPlugin.new
       res.external_payment_method_id="external_payment_method_id"
-      res.is_default_payment_method=false
-      res.properties=[]
+      res.is_default_payment_method=true
       res.type="Test"
       res.cc_name="cc_name"
       res.cc_expiration_month="cc_expiration_month"
@@ -88,6 +86,16 @@ module PaymentTest
       res.state="state"
       res.zip="zip"
       res.country="country"
+      properties = []
+      prop1 =  Killbill::Plugin::Model::PaymentMethodKVInfo.new
+      prop1.key = "key1"
+      prop1.value = "value1"
+      properties << prop1
+      prop2 =  Killbill::Plugin::Model::PaymentMethodKVInfo.new
+      prop2.key = "key2"
+      prop2.value = "value2"
+      properties << prop2
+      res.properties=properties
       res
     end
 
@@ -98,7 +106,7 @@ module PaymentTest
       res = Killbill::Plugin::Model::PaymentMethodInfoPlugin.new
       res.account_id=kb_account_id
       res.payment_method_id=kb_account_id
-      res.is_default=false
+      res.is_default=true
       res.external_payment_method_id="external_payment_method_id"
       [res]
     end
