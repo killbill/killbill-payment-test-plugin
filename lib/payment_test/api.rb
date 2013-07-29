@@ -73,6 +73,7 @@ module PaymentTest
 
     def get_payment_method_detail(kb_account_id, kb_payment_method_id, tenant_context, options = {})
       res = Killbill::Plugin::Model::PaymentMethodPlugin.new
+      res.kb_payment_method_id="9e3ff858-809d-4d12-a1fa-da789e0841d"
       res.external_payment_method_id="external_payment_method_id"
       res.is_default_payment_method=true
       res.type="Test"
@@ -109,6 +110,10 @@ module PaymentTest
       res.is_default=true
       res.external_payment_method_id="external_payment_method_id"
       [res]
+    end
+
+    def search_payment_methods(search_key, tenant_context, options = {})
+      [get_payment_method_detail(nil, nil, nil)]
     end
 
     def reset_payment_methods(kb_account_id, payment_methods)

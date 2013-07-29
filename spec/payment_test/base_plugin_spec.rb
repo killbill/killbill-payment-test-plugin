@@ -37,7 +37,7 @@ describe PaymentTest::PaymentPlugin do
     @plugin.stop_plugin
   end
 
-  it "should should test charge" do
+  it "should test charge" do
     output = @plugin.process_payment(@kb_account_id, @kb_payment_id, @kb_payment_method_id, @amount_in_cents, @currency, @call_context)
 
     output.should be_an_instance_of Killbill::Plugin::Model::PaymentInfoPlugin
@@ -45,4 +45,7 @@ describe PaymentTest::PaymentPlugin do
     output.status.to_s.should == "PROCESSED"
   end
 
+  it "should test search" do
+    @plugin.search_payment_methods("blah", @call_context).size.should == 1
+  end
 end
