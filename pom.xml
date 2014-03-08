@@ -22,10 +22,10 @@
         <version>5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ning.killbill.ruby</groupId>
+    <groupId>org.kill-bill.ruby</groupId>
     <artifactId>payment-test-plugin</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.1</version>
+    <version>1.0.0</version>
     <name>payment-test-plugin</name>
     <description></description>
     <scm>

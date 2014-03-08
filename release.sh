@@ -18,7 +18,7 @@ rake killbill:package
 ARTIFACT="$PWD/pkg/killbill-payment-test-$VERSION.tar.gz"
 echo "Pushing $ARTIFACT to Maven Central"
 mvn gpg:sign-and-deploy-file \
-    -DgroupId=com.ning.killbill.ruby \
+    -DgroupId=org.kill-bill.ruby \
     -DartifactId=payment-test-plugin \
     -Dversion=$VERSION \
     -Dpackaging=tar.gz \
