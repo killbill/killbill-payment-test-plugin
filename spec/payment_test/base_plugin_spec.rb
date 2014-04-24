@@ -38,7 +38,7 @@ describe PaymentTest::PaymentPlugin do
   end
 
   it "should test charge" do
-    output = @plugin.process_payment(@kb_account_id, @kb_payment_id, @kb_payment_method_id, @amount_in_cents, @currency, @call_context)
+    output = @plugin.process_payment(@kb_account_id, @kb_payment_id, @kb_payment_method_id, @amount_in_cents, @currency, nil, @call_context)
 
     output.should be_an_instance_of Killbill::Plugin::Model::PaymentInfoPlugin
     output.amount.should == @amount_in_cents
@@ -46,6 +46,6 @@ describe PaymentTest::PaymentPlugin do
   end
 
   it "should test search" do
-    @plugin.search_payment_methods("blah", @call_context).size.should == 1
+    @plugin.search_payment_methods("blah", 0, 100, nil, @call_context).size.should == 1
   end
 end

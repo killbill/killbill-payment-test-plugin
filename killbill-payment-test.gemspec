@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.rdoc_options << '--exclude' << '.'
 
 
-  s.add_dependency 'killbill', '~> 3.0.0'
+  s.add_dependency 'killbill', '~> 3.1.0'
 
   s.add_development_dependency 'jbundler', '~> 0.4.1'
   s.add_development_dependency 'rake', '>= 10.0.0'
