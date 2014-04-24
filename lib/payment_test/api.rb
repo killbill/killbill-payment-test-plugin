@@ -44,7 +44,7 @@ module PaymentTest
 
     def process_refund(kb_account_id, kb_payment_id, refund_amount, currency, properties, context)
       res = Killbill::Plugin::Model::RefundInfoPlugin.new
-      res.amount= amount
+      res.amount= refund_amount
       res.created_date= DateTime.now
       res.effective_date=DateTime.now
       res.status=:PROCESSED
