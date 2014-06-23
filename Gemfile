@@ -2,4 +2,4 @@ source "http://rubygems.org"
 
 gemspec
 
-#gem 'killbill', :path => '../killbill-plugin-framework-ruby'
+gem 'killbill', :path => '../killbill-plugin-framework-ruby'
