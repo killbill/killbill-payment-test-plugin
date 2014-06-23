@@ -1,8 +1,5 @@
 require 'spec_helper'
 require 'logger'
-require 'tempfile'
-
-require 'killbill'
 
 require 'payment_test'
 
