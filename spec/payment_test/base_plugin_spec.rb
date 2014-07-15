@@ -5,6 +5,7 @@ require 'payment_test'
 
 describe PaymentTest::PaymentPlugin do
   before(:each) do
+
     kb_apis = Killbill::Plugin::KillbillApi.new("killbill-payment-test", {})
     @plugin = PaymentTest::PaymentPlugin.new
     @plugin.logger = Logger.new(STDOUT)
@@ -25,7 +26,7 @@ describe PaymentTest::PaymentPlugin do
   end
 
   it "should test charge" do
-    output = @plugin.purchase_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, [], @call_context)
+    output = @plugin.purchase_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, nil, @call_context)
 
     output.should be_an_instance_of Killbill::Plugin::Model::PaymentTransactionInfoPlugin
     output.amount.should == @amount_in_cents
@@ -35,4 +36,32 @@ describe PaymentTest::PaymentPlugin do
   it "should test search" do
     @plugin.search_payment_methods("blah", 0, 100, nil, @call_context).size.should == 1
   end
+
+  it "should test control api" do
+    properties = Hash.new
+    properties['TEST_MODE'] = 'CONTROL'
+    transaction1 = @plugin.authorize_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, properties, @call_context)
+
+    transaction1.should be_an_instance_of Killbill::Plugin::Model::PaymentTransactionInfoPlugin
+    transaction1.kb_payment_id.should == @kb_payment_id
+    transaction1.kb_transaction_payment_id.should == @kb_payment_transaction_id
+    transaction1.amount.should == @amount_in_cents
+    transaction1.currency.should == @currency
+    transaction1.transaction_type.should == :AUTHORIZE
+    transaction1.status.should == :PROCESSED
+
+    properties['TRANSACTION_STATUS'] = 'ERROR'
+
+    transaction2 = @plugin.capture_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, properties, @call_context)
+    transaction2.kb_payment_id.should == @kb_payment_id
+    transaction2.kb_transaction_payment_id.should == @kb_payment_transaction_id
+    transaction2.amount.should == @amount_in_cents
+    transaction2.currency.should == @currency
+    transaction2.transaction_type.should == :CAPTURE
+    transaction2.status.should == :ERROR
+
+    transactions = @plugin.get_payment_info(@kb_account_id, @kb_payment_id,  properties, @call_context)
+    transactions.size.should == 2
+  end
+
 end
