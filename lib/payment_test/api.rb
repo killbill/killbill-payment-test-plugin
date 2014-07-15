@@ -7,6 +7,7 @@ module PaymentTest
     attr_reader :api_beatrix, :api_control
 
     def initialize
+      super
       @api_beatrix = PaymentPluginBeatrix.new(self)
       @api_control = PaymentPluginControl.new(self)
     end
