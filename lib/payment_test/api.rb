@@ -1,5 +1,6 @@
 require 'payment_test/api_beatrix'
 require 'payment_test/api_control'
+require 'payment_test/plugin_property_utils'
 
 module PaymentTest
 
@@ -22,19 +23,21 @@ module PaymentTest
       # properties is always the second last argument right before context
       properties = args[args.length - 2]
 
-      if  properties && (!properties.is_a? Hash)
-        raise ArgumentError.new "properties should be a Hash"
-      end
+      # Let's be cautious..
+      PluginPropertyUtils.validate_properties(properties)
+
+      # Extract TEST_MODE property if it exists
+      test_prop = PluginPropertyUtils::get_property_or_nil(properties, 'TEST_MODE')
 
       # Default to Beatrix (nil properties, no key specified, or explicit key)
-      if properties.nil? ||
-          (!properties.has_key? 'TEST_MODE') ||
-          properties['TEST_MODE'] == 'BEATRIX'
+      if test_prop.nil? ||
+          test_prop.value == 'BEATRIX'
         @api_beatrix.send method, *args
       else
         @api_control.sleep_if_required properties
         @api_control.send method, *args
       end
     end
+
   end
 end

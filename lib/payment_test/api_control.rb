@@ -1,3 +1,5 @@
+require 'payment_test/plugin_property_utils'
+
 module PaymentTest
   class PaymentPluginControl
 
@@ -96,14 +98,12 @@ module PaymentTest
 
 
     def sleep_if_required(properties)
-      if properties.nil? ||
-          (!properties.has_key? 'SLEEP_TIME_SEC')
-        return
+      sleep_prop = PluginPropertyUtils::get_property_or_nil(properties, 'SLEEP_TIME_SEC')
+      if sleep_prop
+        sleep_time = sleep_prop.value
+        @parent.logger "PaymentPluginControl sleeping #{sleep_time}"
+        sleep sleep_time
       end
-
-      sleep_time = properties['SLEEP_TIME_SEC']
-      @parent.logger "PaymentPluginControl sleeping #{sleep_time}"
-      sleep sleep_time
     end
 
     private
@@ -135,12 +135,8 @@ module PaymentTest
 
 
     def status_from_properties(properties)
-      if properties.nil? ||
-          (!properties.has_key? 'TRANSACTION_STATUS')
-        return :PROCESSED
-      else
-        properties['TRANSACTION_STATUS'].to_sym
-      end
+      status_prop = PluginPropertyUtils::get_property_or_nil(properties, 'TRANSACTION_STATUS')
+      status_prop.nil? ? :PROCESSED : status_prop.value.to_sym
     end
   end
 end

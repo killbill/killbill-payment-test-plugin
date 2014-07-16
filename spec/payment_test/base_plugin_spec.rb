@@ -38,8 +38,13 @@ describe PaymentTest::PaymentPlugin do
   end
 
   it "should test control api" do
-    properties = Hash.new
-    properties['TEST_MODE'] = 'CONTROL'
+
+    properties = []
+    prop_test_mode = Killbill::Plugin::Model::PluginProperty.new
+    prop_test_mode.key = 'TEST_MODE'
+    prop_test_mode.value = 'CONTROL'
+    properties << prop_test_mode
+
     transaction1 = @plugin.authorize_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, properties, @call_context)
 
     transaction1.should be_an_instance_of Killbill::Plugin::Model::PaymentTransactionInfoPlugin
@@ -50,7 +55,10 @@ describe PaymentTest::PaymentPlugin do
     transaction1.transaction_type.should == :AUTHORIZE
     transaction1.status.should == :PROCESSED
 
-    properties['TRANSACTION_STATUS'] = 'ERROR'
+    prop_status = Killbill::Plugin::Model::PluginProperty.new
+    prop_status.key = 'TRANSACTION_STATUS'
+    prop_status.value = 'ERROR'
+    properties << prop_status
 
     transaction2 = @plugin.capture_payment(@kb_account_id, @kb_payment_id, @kb_payment_transaction_id, @kb_payment_method_id, @amount_in_cents, @currency, properties, @call_context)
     transaction2.kb_payment_id.should == @kb_payment_id
