@@ -100,8 +100,8 @@ module PaymentTest
     def sleep_if_required(properties)
       sleep_prop = PluginPropertyUtils::get_property_or_nil(properties, 'SLEEP_TIME_SEC')
       if sleep_prop
-        sleep_time = sleep_prop.value
-        @parent.logger "PaymentPluginControl sleeping #{sleep_time}"
+        sleep_time = sleep_prop.value.to_f
+        @parent.logger.info "PaymentPluginControl sleeping #{sleep_time}"
         sleep sleep_time
       end
     end

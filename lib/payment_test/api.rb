@@ -4,13 +4,30 @@ require 'payment_test/plugin_property_utils'
 
 module PaymentTest
 
-  #
-  # Note we don't inherit Killbill::Plugin::Payment < Killbill::Plugin::PluginBase, but we inherit straight Killbill::Plugin::PluginBase
-  # to bypass the definition of all the APIs, which by default raise OperationUnsupportedByGatewayError. That way, any API call
-  # goes straight into method_missing, and the correct delegate dispatching can happen.
-  #
-  class PaymentPlugin < Killbill::Plugin::PluginBase
+  class PaymentPlugin < Killbill::Plugin::Payment
     attr_reader :api_beatrix, :api_control
+
+    #
+    # undef all methods defined in Killbill::Plugin::Payment that throw by default OperationUnsupportedByGatewayError
+    # so we get directed straight to the method_missing handler
+    #
+    undef_method :authorize_payment
+    undef_method :capture_payment
+    undef_method :purchase_payment
+    undef_method :void_payment
+    undef_method :credit_payment
+    undef_method :refund_payment
+    undef_method :get_payment_info
+    undef_method :search_payments
+    undef_method :add_payment_method
+    undef_method :delete_payment_method
+    undef_method :get_payment_method_detail
+    undef_method :set_default_payment_method
+    undef_method :get_payment_methods
+    undef_method :search_payment_methods
+    undef_method :reset_payment_methods
+    undef_method :build_form_descriptor
+    undef_method :process_notification
 
     def initialize
       super
