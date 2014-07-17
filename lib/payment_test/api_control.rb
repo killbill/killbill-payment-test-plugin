@@ -96,6 +96,16 @@ module PaymentTest
       # Noop
     end
 
+    def throw_exception_if_required(properties)
+      exception = PluginPropertyUtils::get_property_or_nil(properties, 'THROW_EXCEPTION')
+      if exception
+        raise RuntimeError.new("throwing cause #{exception}")
+      end
+    end
+
+    def should_return_nil(properties)
+      PluginPropertyUtils::get_property_or_nil(properties, 'RETURN_NIL')
+    end
 
     def sleep_if_required(properties)
       sleep_prop = PluginPropertyUtils::get_property_or_nil(properties, 'SLEEP_TIME_SEC')

@@ -51,7 +51,18 @@ module PaymentTest
           test_prop.value == 'BEATRIX'
         @api_beatrix.send method, *args
       else
-        @api_control.sleep_if_required properties
+        # Check if we need to throw
+        @api_control.throw_exception_if_required(properties)
+
+        # Check if we should return nil
+        if @api_control.should_return_nil(properties)
+          return nil
+        end
+
+        # Check if we need to sleep
+        @api_control.sleep_if_required(properties)
+
+        # Finally make the call
         @api_control.send method, *args
       end
     end
