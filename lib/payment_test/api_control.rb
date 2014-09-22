@@ -99,7 +99,7 @@ module PaymentTest
     def throw_exception_if_required(properties)
       exception = PluginPropertyUtils::get_property_or_nil(properties, 'THROW_EXCEPTION')
       if exception
-        raise RuntimeError.new("throwing cause #{exception}")
+        raise RuntimeError.new("throwing cause #{exception.value}")
       end
     end
 
