@@ -38,7 +38,7 @@ module PaymentTest
     end
 
     def void_payment(kb_account_id, kb_payment_id, kb_transaction_id, kb_payment_method_id, properties, context)
-      add_transaction(kb_account_id, kb_payment_id, kb_transaction_id, :VOID, amount, currency, properties)
+      add_transaction(kb_account_id, kb_payment_id, kb_transaction_id, :VOID, nil, nil, properties)
     end
 
     def credit_payment(kb_account_id, kb_payment_id, kb_transaction_id, kb_payment_method_id, amount, currency, properties, context)
