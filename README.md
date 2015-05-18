@@ -1,5 +1,5 @@
 killbill-payment-test-plugin
-==============================
+============================
 
 Plugin to test the Kill Bill PaymentPlugin API.
 
