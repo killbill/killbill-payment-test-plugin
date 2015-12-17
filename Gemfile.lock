@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     killbill-payment-test (2.0.0)
-      killbill (~> 6.2.0)
+      killbill (~> 6.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -14,7 +14,7 @@ GEM
     jbundler (0.4.3)
       maven-tools (~> 0.32.1)
       ruby-maven (~> 3.0.4)
-    killbill (6.2.0)
+    killbill (6.5.0)
       rack (>= 1.5.2)
       sinatra (~> 1.3.4)
       typhoeus (~> 0.6.9)
