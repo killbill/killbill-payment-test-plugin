@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    killbill-payment-test (2.0.0)
+    killbill-payment-test (2.1.0)
       killbill (~> 6.5.0)
 
 GEM
