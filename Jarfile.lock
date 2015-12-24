@@ -36,11 +36,13 @@
 - org.jdbi:jdbi:jar:2.62
 - org.kill-bill.billing:killbill-platform-api:jar:0.15
 - org.kill-bill.billing:killbill-platform-osgi:jar:0.15
+- org.bouncycastle:bcprov-jdk15on:jar:1.50
 - org.apache.felix:org.apache.felix.framework:jar:4.4.1
 - org.joda:joda-money:jar:0.9
 - org.kill-bill.commons:killbill-jdbi:jar:0.11
 - org.kill-bill.commons:killbill-embeddeddb-common:jar:0.11
 - org.apache.shiro:shiro-core:jar:1.2.3
+- org.bouncycastle:bcpkix-jdk15on:jar:1.50
 - org.kill-bill.billing:killbill-platform-osgi-api:jar:0.15
 - org.kill-bill.billing.plugin:killbill-plugin-api-payment:jar:0.18
 - com.fasterxml.jackson.core:jackson-databind:jar:2.4.3
