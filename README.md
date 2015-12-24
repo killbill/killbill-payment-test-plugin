@@ -11,7 +11,7 @@ The plugin currently supports 3 different modes
 * A mode where the plugin can be configured through a private endpoint for all subsequent requests
 * A backward compatible mode for existing killbill unit test
 
-## Per Request Level
+## Per Request Level  Configuration
 
 When using payment api, one can provide payment plugin properties to enable failure modes:
 
@@ -21,7 +21,7 @@ In that mode, the property `TEST_MODE` must be set to something different than `
 * `RETURN_NIL`=true : This will make the plugin return a nil value on each call
 * `SLEEP_TIME_SEC`=sleep_time_sec : This will make the plugin sleep `sleep_time_sec` on each call
 
-## Global State
+## Global State Configuration
 
 There are cases where it is not possible to pass plugin properties because the payments are made by the system, and the user does not have the opportunity to set plugin properties. For example, when Kill Bill attempts to pay an invoice, it make a `purchase_payment` call without passing plugin properties.
 
@@ -63,6 +63,6 @@ curl -v \
  -v 'http://127.0.0.1:8080/plugins/killbill-payment-test/configure'
 ```
 
-## Kill Bill Backward Compatible Testing Mode
+## Kill Bill Backward Compatible Configuration
 
 This should be ignored as this will be depracated
