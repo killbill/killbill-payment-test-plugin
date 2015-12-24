@@ -50,7 +50,7 @@ module PaymentTest
     end
 
     def get_payment_info(kb_account_id, kb_payment_id, properties, context)
-      @payments[kb_payment_id].transactions
+      @payments[kb_payment_id] ? @payments[kb_payment_id].transactions : nil
     end
 
     def search_payments(search_key, offset, limit, properties, context)
@@ -96,21 +96,22 @@ module PaymentTest
       # Noop
     end
 
-    def throw_exception_if_required(properties)
+    def throw_exception_if_required(properties, force_exception)
       exception = PluginPropertyUtils::get_property_or_nil(properties, 'THROW_EXCEPTION')
-      if exception
-        raise RuntimeError.new("throwing cause #{exception.value}")
+      if force_exception || exception
+        raise RuntimeError.new("throwing exception}")
       end
     end
 
-    def should_return_nil(properties)
-      PluginPropertyUtils::get_property_or_nil(properties, 'RETURN_NIL')
+    def should_return_nil(properties, force_nil)
+      force_nil || PluginPropertyUtils::get_property_or_nil(properties, 'RETURN_NIL')
     end
 
-    def sleep_if_required(properties)
+    def sleep_if_required(properties, force_sleep_sec)
       sleep_prop = PluginPropertyUtils::get_property_or_nil(properties, 'SLEEP_TIME_SEC')
-      if sleep_prop
-        sleep_time = sleep_prop.value.to_f
+      resolved_sleep_sec = force_sleep_sec || sleep_prop
+      if resolved_sleep_sec
+        sleep_time = resolved_sleep_sec.value.to_f
         @parent.logger.info "PaymentPluginControl sleeping #{sleep_time}"
         sleep sleep_time
       end

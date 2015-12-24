@@ -1,10 +1,13 @@
 require 'payment_test/api_beatrix'
 require 'payment_test/api_control'
 require 'payment_test/plugin_property_utils'
+require 'payment_test/state'
 
 module PaymentTest
 
   class PaymentPlugin < Killbill::Plugin::Payment
+
+
     attr_reader :api_beatrix, :api_control
 
     #
@@ -33,6 +36,8 @@ module PaymentTest
       super
       @api_beatrix = PaymentPluginBeatrix.new(self)
       @api_control = PaymentPluginControl.new(self)
+
+      @state = PaymentTest::State.instance
     end
 
 
@@ -43,29 +48,37 @@ module PaymentTest
       # Let's be cautious..
       PluginPropertyUtils.validate_properties(properties)
 
-      # Extract TEST_MODE property if it exists
-      test_prop = PluginPropertyUtils::get_property_or_nil(properties, 'TEST_MODE')
-
-      # Default to Beatrix (nil properties, no key specified, or explicit key)
-      if test_prop.nil? ||
-          test_prop.value == 'BEATRIX'
+      if is_beatrix_call(properties)
         @api_beatrix.send method, *args
       else
         # Check if we need to throw
-        @api_control.throw_exception_if_required(properties)
+        @api_control.throw_exception_if_required(properties, @state.always_throw(method))
 
         # Check if we should return nil
-        if @api_control.should_return_nil(properties)
+        if @api_control.should_return_nil(properties, @state.always_return_nil(method))
           return nil
         end
 
         # Check if we need to sleep
-        @api_control.sleep_if_required(properties)
+        @api_control.sleep_if_required(properties, @state.sleep_time_sec(method))
 
         # Finally make the call
         @api_control.send method, *args
       end
     end
+
+
+
+    private
+
+    def is_beatrix_call(properties)
+      test_prop = PluginPropertyUtils::get_property_or_nil(properties, 'TEST_MODE')
+      # If a prop has been specified and is not BEATRIX
+      return false if test_prop && test_prop.value != 'BEATRIX'
+      # Default use case for backward compatible beatrix tests
+      return @state.is_clear
+    end
+
 
   end
 end
