@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    killbill-payment-test (3.1.0)
+    killbill-payment-test (3.2.0)
       actionpack (~> 4.1.0)
       actionview (~> 4.1.0)
       activemerchant (~> 1.53.0)
