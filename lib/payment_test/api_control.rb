@@ -66,9 +66,8 @@ module PaymentTest
     end
 
     def get_payment_method_detail(kb_account_id, kb_payment_method_id, properties, context)
-      payment_method = ::Killbill::Plugin::Model::PaymentMethodInfoPlugin.new
-      payment_method.account_id = kb_account_id
-      payment_method.payment_method_id = kb_payment_method_id
+      payment_method = ::Killbill::Plugin::Model::PaymentMethodPlugin.new
+      payment_method.kb_payment_method_id = kb_payment_method_id
       payment_method
     end
 
