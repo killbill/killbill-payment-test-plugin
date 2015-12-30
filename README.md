@@ -17,6 +17,7 @@ When using payment api, one can provide payment plugin properties to enable fail
 
 In that mode, the property `TEST_MODE` must be set to something different than `BEATRIX` (any other string would work. In addition the following properties are allowed:
 
+* `ACTION_RETURN_PLUGIN_STATUS_ERROR`=true : This will make the plugin return a `PaymentPluginStatus.ERROR` on each payment call (e.g to simulate Insuficient Fund type of errors).
 * `THROW_EXCEPTION`=true : This will make the plugin throw RuntimeException exception on each call
 * `RETURN_NIL`=true : This will make the plugin return a nil value on each call
 * `SLEEP_TIME_SEC`=sleep_time_sec : This will make the plugin sleep `sleep_time_sec` on each call
@@ -35,7 +36,7 @@ The json body for the call supports the following:
 
 Examples:
 
-This will confgure the plugin th throw exception on each `purchase_payment` call:
+This will confgure the plugin to return an payment error on each `purchase_payment` call (note that the name of the methods come from the definition of the [payment plugin api](https://github.com/killbill/killbill-plugin-api/blob/master/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java):
 
 ```
 curl -v \
@@ -45,7 +46,7 @@ curl -v \
 -H "Content-Type: application/json" \
 -H 'X-Killbill-CreatedBy: stephane' \
 -X POST \
---data-binary '{"CONFIGURE_ACTION":"ACTION_THROW_EXCEPTION", "METHODS":"purchase_payment"}' \
+--data-binary '{"CONFIGURE_ACTION":"ACTION_RETURN_PLUGIN_STATUS_ERROR", "METHODS":"purchase_payment"}' \
  -v 'http://127.0.0.1:8080/plugins/killbill-payment-test/configure'
 ```
 
