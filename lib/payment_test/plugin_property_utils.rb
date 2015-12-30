@@ -10,6 +10,15 @@ module PaymentTest
       test_props.size == 1 ? test_props[0] : nil
     end
 
+    def self.add_property_if_not_exist(properties, key_name, key_value)
+      if get_property_or_nil(properties, key_name).nil?
+        prop = Killbill::Plugin::Model::PluginProperty.new
+        prop.key = key_name
+        prop.value = key_value
+        properties << prop
+      end
+    end
+
     def self.validate_properties(properties)
       if properties.nil?
         return

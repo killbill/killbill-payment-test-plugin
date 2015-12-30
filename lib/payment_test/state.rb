@@ -9,30 +9,46 @@ module PaymentTest
       reset_configuration
     end
 
+    def configure_always_return_plugin_status_error(methods=nil)
+      reset_configuration
+      configure_methods(methods)
+      @always_return_plugin_status_error = true
+      log_current_state
+    end
+
+
     def configure_always_throw(methods=nil)
+      reset_configuration
       configure_methods(methods)
       @always_throw = true
       log_current_state
     end
 
     def configure_return_nil(methods=nil)
+      reset_configuration
       configure_methods(methods)
       @always_return_nil = true
       log_current_state
     end
 
     def configure_sleep_time(sleep_time_sec, methods=nil)
+      reset_configuration
       configure_methods(methods)
       @sleep_time_sec = sleep_time_sec
       log_current_state
     end
 
     def reset_configuration
+      @always_return_plugin_status_error = false
       @always_throw = false
       @always_return_nil = false
       @sleep_time_sec = nil
       @methods = nil
       log_current_state
+    end
+
+    def always_return_plugin_status_error(method)
+      @always_return_plugin_status_error && is_for_method(method)
     end
 
     def always_throw(method)
@@ -49,11 +65,11 @@ module PaymentTest
     end
 
     def is_clear
-      return !@always_throw && !@always_return_nil && @sleep_time_sec.nil?
+      return !@always_return_plugin_status_error && !@always_throw && !@always_return_nil && @sleep_time_sec.nil?
     end
 
     def log_current_state
-      puts "PaymentTest:State : @always_throw = #{@always_throw}, @always_return_nil = #{@always_return_nil}, @sleep_time_sec = #{@sleep_time_sec}, @methods=#{@methods}"
+      puts "PaymentTest:State : @always_return_plugin_status_error = #{@always_return_plugin_status_error}, @always_throw = #{@always_throw}, @always_return_nil = #{@always_return_nil}, @sleep_time_sec = #{@sleep_time_sec}, @methods=#{@methods}"
     end
 
     private

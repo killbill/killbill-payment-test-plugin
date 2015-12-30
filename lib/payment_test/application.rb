@@ -26,11 +26,13 @@ post '/plugins/killbill-payment-test/configure', :provides => 'json' do
 
   action = data['CONFIGURE_ACTION']
   if action.nil?
-    halt 400, {'Content-Type' => 'text/plain'}, "Invalid json, need to specify one CONFIGURE_ACTION={ACTION_THROW_EXCEPTION|ACTION_RETURN_NIL|ACTION_SLEEP|ACTION_RESET}"
+    halt 400, {'Content-Type' => 'text/plain'}, "Invalid json, need to specify one CONFIGURE_ACTION={ACTION_RETURN_PLUGIN_STATUS_ERROR|ACTION_THROW_EXCEPTION|ACTION_RETURN_NIL|ACTION_SLEEP|ACTION_RESET}"
   end
 
 
-  if action == 'ACTION_THROW_EXCEPTION'
+  if action == 'ACTION_RETURN_PLUGIN_STATUS_ERROR'
+    state.configure_always_return_plugin_status_error(data['METHODS'])
+  elsif action == 'ACTION_THROW_EXCEPTION'
     state.configure_always_throw(data['METHODS'])
   elsif action == 'ACTION_RETURN_NIL'
     state.configure_return_nil(data['METHODS'])

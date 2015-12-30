@@ -43,6 +43,7 @@ module PaymentTest
 
     def method_missing(method, *args, &block)
       # properties is always the second last argument right before context
+      args[args.length - 2] = [] if args[args.length - 2].nil?
       properties = args[args.length - 2]
 
       # Let's be cautious..
@@ -61,6 +62,10 @@ module PaymentTest
 
         # Check if we need to sleep
         @api_control.sleep_if_required(properties, @state.sleep_time_sec(method))
+
+        if @state.always_return_plugin_status_error(method)
+          PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'ERROR')
+        end
 
         # Finally make the call
         @api_control.send method, *args
