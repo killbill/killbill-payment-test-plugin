@@ -27,7 +27,7 @@
     <groupId>org.kill-bill.billing.plugin.ruby</groupId>
     <artifactId>payment-test-plugin</artifactId>
     <packaging>pom</packaging>
-    <version>4.0.0</version>
+    <version>5.0.0</version>
     <name>payment-test-plugin</name>
     <description></description>
     <scm>

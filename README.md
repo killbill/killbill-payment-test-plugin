@@ -12,6 +12,7 @@ Kill Bill compatibility
 | 2.x.y          | 0.14.z            |
 | 3.x.y          | 0.16.z            |
 | 4.x.y          | 0.18.z            |
+| 5.x.y          | 0.20.z            |
 
 
 Usage
