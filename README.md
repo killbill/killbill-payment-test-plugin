@@ -30,6 +30,7 @@ When using payment api, one can provide payment plugin properties to enable fail
 In that mode, the property `TEST_MODE` must be set to something different than `BEATRIX` (any other string would work. In addition the following properties are allowed:
 
 * `ACTION_RETURN_PLUGIN_STATUS_ERROR`=true : This will make the plugin return a `PaymentPluginStatus.ERROR` on each payment call (e.g to simulate Insuficient Fund type of errors).
+* `ACTION_RETURN_PLUGIN_STATUS_CANCELED`=true : This will make the plugin return a `PaymentPluginStatus.CANCELED` on each payment call (e.g. to simulate Gateway Error type of errors).
 * `THROW_EXCEPTION`=true : This will make the plugin throw RuntimeException exception on each call
 * `RETURN_NIL`=true : This will make the plugin return a nil value on each call
 * `SLEEP_TIME_SEC`=sleep_time_sec : This will make the plugin sleep `sleep_time_sec` on each call
