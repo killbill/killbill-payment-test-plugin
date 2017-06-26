@@ -67,6 +67,10 @@ module PaymentTest
           PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'ERROR')
         end
 
+        if @state.always_return_plugin_status_canceled(method)
+          PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'CANCELED')
+        end        
+
         # Finally make the call
         @api_control.send method, *args
       end
