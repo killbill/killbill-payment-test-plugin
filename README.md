@@ -31,6 +31,7 @@ In that mode, the property `TEST_MODE` must be set to something different than `
 
 * `ACTION_RETURN_PLUGIN_STATUS_ERROR`=true : This will make the plugin return a `PaymentPluginStatus.ERROR` on each payment call (e.g to simulate Insuficient Fund type of errors).
 * `ACTION_RETURN_PLUGIN_STATUS_CANCELED`=true : This will make the plugin return a `PaymentPluginStatus.CANCELED` on each payment call (e.g. to simulate Gateway Error type of errors).
+* `ACTION_RETURN_PLUGIN_STATUS_PENDING`=true : This will make the plugin return a `PaymentPluginStatus.PENDING` on each payment call
 * `THROW_EXCEPTION`=true : This will make the plugin throw RuntimeException exception on each call
 * `RETURN_NIL`=true : This will make the plugin return a nil value on each call
 * `SLEEP_TIME_SEC`=sleep_time_sec : This will make the plugin sleep `sleep_time_sec` on each call
