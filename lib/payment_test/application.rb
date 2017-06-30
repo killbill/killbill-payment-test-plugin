@@ -34,6 +34,8 @@ post '/plugins/killbill-payment-test/configure', :provides => 'json' do
     state.configure_always_return_plugin_status_error(data['METHODS'])
   elsif action == 'ACTION_RETURN_PLUGIN_STATUS_CANCELED'
     state.configure_always_return_plugin_status_canceled(data['METHODS'])
+  elsif action == 'ACTION_RETURN_PLUGIN_STATUS_PENDING'
+    state.configure_always_return_plugin_status_pending(data['METHODS'])
   elsif action == 'ACTION_THROW_EXCEPTION'
     state.configure_always_throw(data['METHODS'])
   elsif action == 'ACTION_RETURN_NIL'

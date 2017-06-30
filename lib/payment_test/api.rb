@@ -67,6 +67,10 @@ module PaymentTest
           PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'ERROR')
         end
 
+        if @state.always_return_plugin_status_pending(method)
+          PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'PENDING')
+        end
+
         if @state.always_return_plugin_status_canceled(method)
           PluginPropertyUtils.add_property_if_not_exist(properties, 'TRANSACTION_STATUS', 'CANCELED')
         end        
