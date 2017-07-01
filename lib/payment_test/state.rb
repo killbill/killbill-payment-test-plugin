@@ -51,6 +51,18 @@ module PaymentTest
       log_current_state
     end
 
+    def status
+      {
+       :always_return_plugin_status_error => @always_return_plugin_status_error,
+       :always_return_plugin_status_pending => @always_return_plugin_status_pending,
+       :always_return_plugin_status_canceled => @always_return_plugin_status_canceled,
+       :always_throw => @always_throw,
+       :always_return_nil => @always_return_nil,
+       :sleep_time_sec => @sleep_time_sec,
+       :methods => @methods
+      }
+    end
+
     def reset_configuration
       @always_return_plugin_status_error = false
       @always_return_plugin_status_pending = false

@@ -14,9 +14,15 @@ helpers do
 end
 
 
+get '/plugins/killbill-payment-test/status', :provides => 'json' do
+  current_state = state.status
+  # Extract non nil value -- basically the one that are set
+  result = current_state.select {|key, value| value}
+  result.to_json
+end
+
 
 post '/plugins/killbill-payment-test/configure', :provides => 'json' do
-
 
   begin
     data = JSON.parse request.body.read
