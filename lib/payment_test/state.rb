@@ -115,7 +115,7 @@ module PaymentTest
     private
 
     def configure_methods(methods=nil)
-      @methods = methods.split(",")
+      @methods = methods.split(",") unless methods.nil?
     end
 
     def is_for_method(method)
