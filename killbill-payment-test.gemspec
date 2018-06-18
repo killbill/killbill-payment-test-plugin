@@ -14,10 +14,8 @@ Gem::Specification.new do |s|
   s.email    = 'killbilling-users@googlegroups.com'
   s.homepage = 'http://killbill.io'
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = Dir['lib/**/*']
   s.bindir        = 'bin'
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
   s.rdoc_options << '--exclude' << '.'
@@ -41,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'money', '~> 6.5.1'
 
   s.add_development_dependency 'jbundler', '~> 0.9.2'
-  s.add_development_dependency 'rake', '>= 10.0.0', '< 11.0.0'
+  s.add_development_dependency 'rake', '>= 10.0.0', '< 11.0'
   s.add_development_dependency 'rspec', '~> 2.12.0'
   if defined?(JRUBY_VERSION)
     s.add_development_dependency 'jdbc-sqlite3', '~> 3.7'
