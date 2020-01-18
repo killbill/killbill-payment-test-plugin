@@ -275,13 +275,37 @@ public class PaymentTestPluginApiTest {
                 new PluginProperty(TestingStates.SLEEP_PLUGIN_CONFIG_PARAM, "60", false));
 
 
-        Assert.assertEquals(this.paymentTestPugin.getSleepFromProperty("authorizePayment", properties), 60);
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", properties), 60);
 
         properties = ImmutableList.of(
                 new PluginProperty(TestingStates.Actions.ACTION_SLEEP.toString(), "authorizePayment", false),
                 new PluginProperty("missing sleep param", "60", false));
 
 
-        Assert.assertEquals(this.paymentTestPugin.getSleepFromProperty("authorizePayment", properties), 0);
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", properties), 0);
+    }
+
+    @Test
+    public void sleepFromGlobalConfig() {
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, "authorizePayment", 15);
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", null), 15);
+    }
+
+    @Test
+    public void wildcardSleepFromGlobalConfig() {
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, null, 15);
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", null), 15);
+    }
+
+    @Test
+    public void sleepFromConfigOverrideGlobal() {
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, "authorizePayment", 15);
+
+        final ImmutableList<PluginProperty> properties = ImmutableList.of(
+                new PluginProperty(TestingStates.Actions.ACTION_SLEEP.toString(), "authorizePayment", false),
+                new PluginProperty(TestingStates.SLEEP_PLUGIN_CONFIG_PARAM, "60", false));
+
+
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", properties), 60);
     }
 }

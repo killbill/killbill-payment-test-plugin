@@ -90,10 +90,11 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
     }
 
     @VisibleForTesting
-    int getSleepFromProperty(final String methodCalled,
-                             final Iterable<PluginProperty> pluginProperties) {
+    int getSleepValue(final String methodCalled,
+                      final Iterable<PluginProperty> pluginProperties) {
         int sleep = 0;
         if (pluginProperties != null) {
+            // look for sleep in 'one time config'
             final Optional<PluginProperty> actionFromProperties =
                     StreamSupport.stream(pluginProperties.spliterator(), false)
                                  // find a plugin property
@@ -121,28 +122,26 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                      .orElse(0);
             }
         }
+        if (sleep == 0) {
+            // look for sleep in global config
+            final Integer globalSleep = (this.testingStates.getSleeps().get("*") != null)
+                    ? this.testingStates.getSleeps().get("*") : this.testingStates.getSleeps().get(methodCalled);
+            if (globalSleep != null && globalSleep.compareTo(this.noSleep) > 0) {
+                sleep = globalSleep;
+            }
+        }
         return sleep;
-        //        final Integer sleep = this.testingStates.getSleeps().get(methodCalled);
-        //        if (sleep != null && sleep.compareTo(this.noSleep) > 0) {
-        //            try {
-        //                this.LOGGER.info("sleeping in " + methodCalled + " for " + sleep.intValue() + "(s)");
-        //                Thread.sleep(sleep.intValue() * 1000000);
-        //            }
-        //            catch (final InterruptedException ignore) {
-        //            }
-        //        }
-        //        return sleep;
     }
 
     private PaymentPluginStatus handleState(final Iterable<PluginProperty> pluginProperties) throws PaymentPluginApiException {
         final String methodCalled = Thread.currentThread().getStackTrace()[2].getMethodName();
-        final TestingStates.Actions action = getAction(methodCalled, pluginProperties);
 
-        final Integer sleep = this.testingStates.getSleeps().get(methodCalled);
-        if (sleep != null && sleep.compareTo(this.noSleep) > 0) {
+        final TestingStates.Actions action = getAction(methodCalled, pluginProperties);
+        final int sleep = getSleepValue(methodCalled, pluginProperties);
+        if (sleep > 0) {
             try {
-                this.LOGGER.info("sleeping in " + methodCalled + " for " + sleep.intValue() + "(s)");
-                Thread.sleep(sleep.intValue() * 1000000);
+                this.LOGGER.info("sleeping in " + methodCalled + " for " + sleep + "(s)");
+                Thread.sleep(sleep * 1000000);
             }
             catch (final InterruptedException ignore) {
             }
