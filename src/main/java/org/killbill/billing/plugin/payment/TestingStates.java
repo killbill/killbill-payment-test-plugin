@@ -22,7 +22,8 @@ public class TestingStates {
         ACTION_RETURN_PLUGIN_STATUS_CANCELED,
         ACTION_THROW_EXCEPTION,
         RETURN_NIL,
-        ACTION_SLEEP
+        ACTION_SLEEP,
+        ACTION_CLEAR
     }
 
     // key is method, "*" is for any method
@@ -50,8 +51,21 @@ public class TestingStates {
                 return false;
             }
         }
-        final String method = (forMethod != null) ? forMethod : "*";
-        this.states.put(method, action);
+
+        if (action.compareTo(Actions.ACTION_CLEAR) == 0) {
+            if (forMethod == null) {
+                this.states.clear();
+                this.sleeps.clear();
+            }
+            else {
+                this.states.remove(forMethod);
+                this.sleeps.remove(forMethod);
+            }
+        }
+        else {
+            final String method = (forMethod != null) ? forMethod : "*";
+            this.states.put(method, action);
+        }
         return true;
     }
 
