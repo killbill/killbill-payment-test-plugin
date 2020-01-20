@@ -80,11 +80,9 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
             }
         }
         // find action from global configuration
-        TestingStates.Actions action = this.testingStates.getStates().get("*");
-
-        final String calledMethod = "All";
+        TestingStates.Actions action = this.testingStates.getStates().get(methodCalled);
         if (action == null) {
-            action = this.testingStates.getStates().get(methodCalled);
+            action = this.testingStates.getStates().get("*");
         }
         return action;
     }
@@ -124,8 +122,8 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         }
         if (sleep == 0) {
             // look for sleep in global config
-            final Integer globalSleep = (this.testingStates.getSleeps().get("*") != null)
-                    ? this.testingStates.getSleeps().get("*") : this.testingStates.getSleeps().get(methodCalled);
+            final Integer globalSleep = (this.testingStates.getSleeps().get(methodCalled) != null)
+                    ? this.testingStates.getSleeps().get(methodCalled) : this.testingStates.getSleeps().get("*");
             if (globalSleep != null && globalSleep.compareTo(this.noSleep) > 0) {
                 sleep = globalSleep;
             }
