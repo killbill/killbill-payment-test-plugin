@@ -1,6 +1,7 @@
 package org.killbill.billing.plugin.payment;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
@@ -65,7 +66,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                          // where key is a known action
                                          TestingStates.Actions.valueOf(p.getKey());
                                          // and value match all or the method called
-                                         if (p.getValue() == null || ((String) p.getValue()).length() == 0 ||
+                                         if (Strings.isNullOrEmpty((String) p.getValue()) ||
                                                  ((String) p.getValue()).compareTo("*") == 0 ||
                                                  ((String) p.getValue()).compareTo(methodCalled) == 0) {
                                              return true;
@@ -80,11 +81,9 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
             }
         }
         // find action from global configuration
-        TestingStates.Actions action = this.testingStates.getStates().get("*");
-
-        final String calledMethod = "All";
+        TestingStates.Actions action = this.testingStates.getStates().get(methodCalled);
         if (action == null) {
-            action = this.testingStates.getStates().get(methodCalled);
+            action = this.testingStates.getStates().get("*");
         }
         return action;
     }
@@ -104,7 +103,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                          TestingStates.Actions a = TestingStates.Actions.valueOf(p.getKey());
                                          // and value match all or the method called
                                          if (a.compareTo(TestingStates.Actions.ACTION_SLEEP) == 0 && (
-                                                 p.getValue() == null || ((String) p.getValue()).length() == 0 ||
+                                                 Strings.isNullOrEmpty((String) p.getValue()) ||
                                                          ((String) p.getValue()).compareTo("*") == 0 ||
                                                          ((String) p.getValue()).compareTo(methodCalled) == 0)) {
                                              return true;
@@ -124,8 +123,8 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         }
         if (sleep == 0) {
             // look for sleep in global config
-            final Integer globalSleep = (this.testingStates.getSleeps().get("*") != null)
-                    ? this.testingStates.getSleeps().get("*") : this.testingStates.getSleeps().get(methodCalled);
+            final Integer globalSleep = (this.testingStates.getSleeps().get(methodCalled) != null)
+                    ? this.testingStates.getSleeps().get(methodCalled) : this.testingStates.getSleeps().get("*");
             if (globalSleep != null && globalSleep.compareTo(this.noSleep) > 0) {
                 sleep = globalSleep;
             }
