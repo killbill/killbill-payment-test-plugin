@@ -12,15 +12,19 @@ import org.killbill.billing.payment.plugin.api.PaymentPluginApiException;
 import org.killbill.billing.payment.plugin.api.PaymentPluginStatus;
 import org.killbill.billing.payment.plugin.api.PaymentTransactionInfoPlugin;
 import org.killbill.billing.plugin.api.PluginCallContext;
+import org.killbill.billing.plugin.api.payment.PluginPaymentTransactionInfoPlugin;
 import org.killbill.billing.plugin.payment.dao.PaymentTestDao;
 import org.killbill.clock.Clock;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import static org.killbill.billing.plugin.payment.PaymentTestActivator.PLUGIN_NAME;
@@ -46,7 +50,13 @@ public class PaymentTestPluginApiTest {
     UUID                 tenantId;
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp() throws SQLException {
+
+        MockitoAnnotations.initMocks(this);
+        Mockito.doNothing().when(this.paymentTestDao).addPaymentResponse(Mockito.any(UUID.class),
+                                                                         Mockito.any(UUID.class),
+                                                                         Mockito.any(
+                                                                                 PluginPaymentTransactionInfoPlugin.class));
 
         this.tenantId = UUID.randomUUID();
         this.accountId = UUID.randomUUID();

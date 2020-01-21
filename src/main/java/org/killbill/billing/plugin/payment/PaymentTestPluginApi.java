@@ -221,6 +221,18 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         return null;
     }
 
+
+    private void insertPaymentResponse(final UUID kbAccountId,
+                                       final UUID tenantId,
+                                       final PluginPaymentTransactionInfoPlugin infoPlugin) throws PaymentPluginApiException {
+        try {
+            this.dao.addPaymentResponse(kbAccountId, tenantId, infoPlugin);
+        }
+        catch (final SQLException e) {
+            throw new PaymentPluginApiException(e.getMessage(), e);
+        }
+    }
+
     @Override
     public PaymentTransactionInfoPlugin authorizePayment(final UUID kbAccountId,
                                                          final UUID kbPaymentId,
@@ -232,16 +244,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                          final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.AUTHORIZE,
-                                                          amount,
-                                                          currency,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.AUTHORIZE,
+                                                                                                         amount,
+                                                                                                         currency,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
@@ -257,16 +274,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                        final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.CAPTURE,
-                                                          amount,
-                                                          currency,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.CAPTURE,
+                                                                                                         amount,
+                                                                                                         currency,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
@@ -282,16 +304,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                         final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.PURCHASE,
-                                                          amount,
-                                                          currency,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.PURCHASE,
+                                                                                                         amount,
+                                                                                                         currency,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
@@ -305,16 +332,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                     final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.VOID,
-                                                          null,
-                                                          null,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.VOID,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
@@ -330,16 +362,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                       final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.CREDIT,
-                                                          amount,
-                                                          currency,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.CREDIT,
+                                                                                                         amount,
+                                                                                                         currency,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
@@ -355,16 +392,21 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                       final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            return new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                          kbPaymentMethodId,
-                                                          TransactionType.REFUND,
-                                                          null,
-                                                          null,
-                                                          pluginStatus,
-                                                          null, null, null, null,
-                                                          DateTime.now(),
-                                                          DateTime.now(),
-                                                          null);
+            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+                                                                                                         kbPaymentMethodId,
+                                                                                                         TransactionType.REFUND,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         pluginStatus,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         null,
+                                                                                                         DateTime.now(),
+                                                                                                         DateTime.now(),
+                                                                                                         null);
+            insertPaymentResponse(kbAccountId, context.getTenantId(), infoPlugin);
+            return infoPlugin;
         }
         return null;
     }
