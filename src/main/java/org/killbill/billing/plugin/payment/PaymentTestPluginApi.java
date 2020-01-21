@@ -1,6 +1,7 @@
 package org.killbill.billing.plugin.payment;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
@@ -65,7 +66,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                          // where key is a known action
                                          TestingStates.Actions.valueOf(p.getKey());
                                          // and value match all or the method called
-                                         if (p.getValue() == null || ((String) p.getValue()).length() == 0 ||
+                                         if (Strings.isNullOrEmpty((String) p.getValue()) ||
                                                  ((String) p.getValue()).compareTo("*") == 0 ||
                                                  ((String) p.getValue()).compareTo(methodCalled) == 0) {
                                              return true;
@@ -102,7 +103,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                          TestingStates.Actions a = TestingStates.Actions.valueOf(p.getKey());
                                          // and value match all or the method called
                                          if (a.compareTo(TestingStates.Actions.ACTION_SLEEP) == 0 && (
-                                                 p.getValue() == null || ((String) p.getValue()).length() == 0 ||
+                                                 Strings.isNullOrEmpty((String) p.getValue()) ||
                                                          ((String) p.getValue()).compareTo("*") == 0 ||
                                                          ((String) p.getValue()).compareTo(methodCalled) == 0)) {
                                              return true;
