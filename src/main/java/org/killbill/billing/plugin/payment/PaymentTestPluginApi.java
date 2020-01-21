@@ -24,12 +24,14 @@ import org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentResponses;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentPaymentMethodsRecord;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentResponsesRecord;
 import org.killbill.billing.util.callcontext.CallContext;
+import org.killbill.billing.util.callcontext.TenantContext;
 import org.killbill.clock.Clock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
@@ -380,5 +382,18 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                    final Iterable<PluginProperty> properties,
                                                    final CallContext context) throws PaymentPluginApiException {
         return null;
+    }
+
+    @Override
+    public List<PaymentTransactionInfoPlugin> getPaymentInfo(final UUID kbAccountId,
+                                                             final UUID kbPaymentId,
+                                                             final Iterable<PluginProperty> properties,
+                                                             final TenantContext context) throws PaymentPluginApiException {
+        try {
+            return this.dao.getPaymentResponses(kbAccountId, context.getTenantId(), kbPaymentId);
+        }
+        catch (final SQLException e) {
+            throw new PaymentPluginApiException(e.getMessage(), e);
+        }
     }
 }
