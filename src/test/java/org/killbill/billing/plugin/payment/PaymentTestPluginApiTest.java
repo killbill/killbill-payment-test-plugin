@@ -168,6 +168,25 @@ public class PaymentTestPluginApiTest {
     }
 
     @Test
+    public void methodOverrideWildCard() throws PaymentPluginApiException {
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_ERROR, null);
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, "authorizePayment");
+
+        final PaymentTransactionInfoPlugin ret = this.paymentTestPugin.authorizePayment(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                BigDecimal.TEN,
+                Currency.EUR,
+                null,
+                this.pluginCallContext);
+        Assert.assertEquals(ret.getStatus(), PaymentPluginStatus.PENDING);
+
+    }
+
+    @Test
+
     public void useValidPluginProperty() throws PaymentPluginApiException {
         final ImmutableList<PluginProperty> properties = ImmutableList.of(
                 new PluginProperty(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING.toString(),
@@ -276,6 +295,14 @@ public class PaymentTestPluginApiTest {
                 properties,
                 this.pluginCallContext);
         Assert.assertEquals(ret.getStatus(), PaymentPluginStatus.ERROR);
+    }
+
+    @Test
+    public void sleepMethodOverrideWildCard() {
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, "authorizePayment", 15);
+        this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING, null, 60);
+        Assert.assertEquals(this.paymentTestPugin.getSleepValue("authorizePayment", null), 15);
+
     }
 
     @Test
