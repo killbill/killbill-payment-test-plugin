@@ -28,6 +28,11 @@ test.db
 target
 pom.xml.asc
 
+#IntelliJ
 .idea/
+*.iml
 
 Gemfile.head.lock
+
+# maven
+dependency-reduced-pom.xml
