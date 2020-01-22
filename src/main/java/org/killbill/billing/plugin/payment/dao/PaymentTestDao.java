@@ -58,7 +58,7 @@ public class PaymentTestDao extends PluginPaymentDao<TestpaymentResponsesRecord,
                        , infoPlugin.getKbTransactionPaymentId().toString()
                        , infoPlugin.getTransactionType().name()
                        , infoPlugin.getAmount()
-                       , infoPlugin.getCurrency().getSymbol()
+                       , infoPlugin.getCurrency().name()
                        , toTimestamp(infoPlugin.getCreatedDate())
                        , tenantId.toString()
                )
