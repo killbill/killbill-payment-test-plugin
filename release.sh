@@ -1,61 +1,36 @@
+###################################################################################
+#                                                                                 #
+#                   Copyright 2020 The Billing Project, LLC.                      #
+#                                                                                 #
+#      The Billing Project licenses this file to you under the Apache License, version 2.0       #
+#      (the "License"); you may not use this file except in compliance with the   #
+#      License.  You may obtain a copy of the License at:                         #
+#                                                                                 #
+#          http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                                 #
+#      Unless required by applicable law or agreed to in writing, software        #
+#      distributed under the License is distributed on an "AS IS" BASIS, WITHOUT  #
+#      WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the  #
+#      License for the specific language governing permissions and limitations    #
+#      under the License.                                                         #
+#                                                                                 #
+###################################################################################
+
 set -e
 
-BUNDLE=${BUNDLE-"bundle exec"}
-MVN=${MVN-"mvn"}
+# Make sure we're up-to-date
+git pull
 
-if [ 'GNU' != "$(tar --help | grep GNU | head -1 | awk '{print $1}')" ]; then
-  echo 'Unable to release: make sure to use GNU tar'
-  exit 1
-fi
+NEXT_VERSION=`grep -E '<version>([0-9]+\.[0-9]+\.[0-9]+)-SNAPSHOT</version>' pom.xml | sed 's/[\t \n]*<version>\(.*\)-SNAPSHOT<\/version>[\t \n]*/\1/'`
 
-if $(ruby -e'require "java"'); then
-  # Good
-  echo 'Detected JRuby'
-else
-  echo 'Unable to release: make sure to use JRuby'
-  exit 1
-fi
 
-VERSION=`grep -E '<version>([0-9]+\.[0-9]+\.[0-9]+)</version>' pom.xml | sed 's/[\t \n]*<version>\(.*\)<\/version>[\t \n]*/\1/'`
-if [[ -z "$NO_RELEASE" && "$VERSION" != "$(cat $PWD/VERSION)" ]]; then
-  echo 'Unable to release: make sure the versions in pom.xml and VERSION match'
-  exit 1
-fi
+# Make sure we can push before the release
+git push
 
-echo 'Cleaning up'
-$BUNDLE rake killbill:clean
-
-echo 'Building gem'
-$BUNDLE rake build
-
-if [[ -z "$NO_RELEASE" ]]; then
-  echo 'Pushing the gem to Rubygems'
-  $BUNDLE rake release
-fi
-
-echo 'Building artifact'
-$BUNDLE rake killbill:package
-
-ARTIFACT="$PWD/pkg/killbill-payment-test-$VERSION.tar.gz"
-echo "Pushing $ARTIFACT to Maven Central"
-
-if [[ -z "$NO_RELEASE" ]]; then
-  GOAL=gpg:sign-and-deploy-file
-  REPOSITORY_ID=ossrh-releases
-  URL=https://oss.sonatype.org/service/local/staging/deploy/maven2/
-else
-  GOAL=deploy:deploy-file
-  REPOSITORY_ID=sonatype-nexus-snapshots
-  URL=https://oss.sonatype.org/content/repositories/snapshots/
-  VERSION="$VERSION-SNAPSHOT"
-fi
-
-$MVN $GOAL \
-     -DgroupId=org.kill-bill.billing.plugin.ruby \
-     -DartifactId=payment-test-plugin \
-     -Dversion=$VERSION \
-     -Dpackaging=tar.gz \
-     -DrepositoryId=$REPOSITORY_ID \
-     -Durl=$URL \
-     -Dfile=$ARTIFACT \
-     -DpomFile=pom.xml
+# Do the release
+echo "Running: mvn release:clean" && \
+mvn release:clean && \
+echo "Running: mvn release:prepare" && \
+mvn release:prepare && \
+echo "Running: mvn release:perform" && \
+mvn release:perform

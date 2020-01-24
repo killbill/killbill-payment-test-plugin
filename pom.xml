@@ -13,7 +13,7 @@
     <packaging>bundle</packaging>
     <groupId>org.killbill.billing.plugin.payment</groupId>
     <artifactId>payment-test-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
 
     <name>payment-test-plugin</name>
     <description>A simple payment-test-plugin.</description>
