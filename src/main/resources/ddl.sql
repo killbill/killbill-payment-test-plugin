@@ -17,6 +17,7 @@ create index testpayment_hpp_requests_kb_payment_transaction_id on testpayment_h
 
 create table testpayment_responses (
   record_id serial
+, status char(10)not null
 , kb_account_id char(36) not null
 , kb_payment_id char(36) not null
 , kb_payment_transaction_id char(36) not null
