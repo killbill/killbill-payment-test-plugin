@@ -6,18 +6,27 @@
     <parent>
         <artifactId>killbill-oss-parent</artifactId>
         <groupId>org.kill-bill.billing</groupId>
-        <version>0.143.41</version>
+        <version>0.143.49</version>
     </parent>
 
     <packaging>bundle</packaging>
     <groupId>org.killbill.billing.plugin.payment</groupId>
     <artifactId>payment-test-plugin</artifactId>
-    <version>7.0.0</version>
-
+    <version>7.0.0-SNAPSHOT</version>
     <name>payment-test-plugin</name>
-    <description>A simple payment-test-plugin.</description>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <description>A simple Payment Test Plugin.</description>
+
+    <url>http://github.com/killbill/killbill-payment-test-plugin</url>
+
+	<scm>
+	    <connection>scm:git:git://github.com/killbill/killbill-payment-test-plugin.git</connection>
+	    <developerConnection>scm:git:git@github.com:killbill/killbill-payment-test-plugin.git</developerConnection>
+	    <url>http://github.com/killbill/killbill-payment-test-plugin/tree/master</url>
+	</scm>
+	<issueManagement>
+	    <system>Github</system>
+	    <url>https://github.com/killbill/killbill-payment-test-plugin/issues</url>
+	</issueManagement>
 
     <properties>
         <killbill-api.version>0.53.17</killbill-api.version>
