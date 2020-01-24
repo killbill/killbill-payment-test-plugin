@@ -36,3 +36,6 @@ Gemfile.head.lock
 
 # maven
 dependency-reduced-pom.xml
+
+pom.xml.releaseBackup
+release.properties
