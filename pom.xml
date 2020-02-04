@@ -10,7 +10,7 @@
     </parent>
 
     <packaging>bundle</packaging>
-    <groupId>org.killbill.billing.plugin.payment</groupId>
+    <groupId>org.kill-bill.billing.plugin.java</groupId>
     <artifactId>payment-test-plugin</artifactId>
     <version>7.0.2-SNAPSHOT</version>
     <name>payment-test-plugin</name>
