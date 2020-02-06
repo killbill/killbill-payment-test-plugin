@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!--
+  ~ Copyright 2020 The Billing Project, LLC
+  ~
+  ~ The Billing Project licenses this file to you under the Apache License, version 2.0
+  ~ (the "License"); you may not use this file except in compliance with the
+  ~ License.  You may obtain a copy of the License at:
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>killbill-oss-parent</artifactId>
         <groupId>org.kill-bill.billing</groupId>
         <version>0.143.49</version>
     </parent>
-
-    <packaging>bundle</packaging>
     <groupId>org.kill-bill.billing.plugin.java</groupId>
     <artifactId>payment-test-plugin</artifactId>
+    <name>Kill Bill Payment Test plugin</name>
     <version>7.0.4-SNAPSHOT</version>
-    <name>payment-test-plugin</name>
-    <description>A simple Payment Test Plugin.</description>
-
+    <packaging>bundle</packaging>
+    <description>Kill Bill Payment Test plugin</description>
     <url>http://github.com/killbill/killbill-payment-test-plugin</url>
-
 	<scm>
 	    <connection>scm:git:git://github.com/killbill/killbill-payment-test-plugin.git</connection>
 	    <developerConnection>scm:git:git@github.com:killbill/killbill-payment-test-plugin.git</developerConnection>
@@ -27,12 +37,7 @@
 	    <system>Github</system>
 	    <url>https://github.com/killbill/killbill-payment-test-plugin/issues</url>
 	</issueManagement>
-
     <properties>
-        <killbill-api.version>0.53.17</killbill-api.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -119,14 +124,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -150,27 +148,9 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
-                <configuration combine.self="override">
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <arguments>${arguments}</arguments>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <instructions>
                         <Bundle-Activator>org.killbill.billing.plugin.payment.PaymentTestActivator</Bundle-Activator>
@@ -329,6 +309,14 @@
                         </Import-Package>
                     </instructions>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -355,45 +343,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>jdk18</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
-                            <showDeprecation>true</showDeprecation>
-                            <showWarnings>true</showWarnings>
-                            <fork>true</fork>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>jar</goal>
-                                    <goal>test-jar</goal>
-                                </goals>
-                                <configuration>
-                                    <classifier>jdk18</classifier>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <skipIfEmpty>true</skipIfEmpty>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
