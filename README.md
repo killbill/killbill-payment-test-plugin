@@ -39,19 +39,19 @@ In that mode, the property `TEST_MODE` must be set to something different than `
 
 ## Global State Configuration
 
-There are cases where it is not possible to pass plugin properties because the payments are made by the system, and the user does not have the opportunity to set plugin properties. For example, when Kill Bill attempts to pay an invoice, it make a `purchase_payment` call without passing plugin properties.
+There are cases where it is not possible to pass plugin properties because the payments are made by the system, and the user does not have the opportunity to set plugin properties. For example, when Kill Bill attempts to pay an invoice, it make a `purchasePayment` call without passing plugin properties.
 
-In order to address this scenario it is convenient to configure the plugin to behave a certain way. The plugin can be configured using a private endpoint `/plugins/killbill-payment-test/configure` to either throw exceptions, return nil values or sleep (similar to previous mode). However we also allow to configure which operations should behave that way (the idea is that we may want to make a `purchase_payment` call fail but still allow the `get_payment_info` call to return.
+In order to address this scenario it is convenient to configure the plugin to behave a certain way. The plugin can be configured using a private endpoint `/plugins/killbill-payment-test/configure` to either throw exceptions, return nil values or sleep (similar to previous mode). However we also allow to configure which operations should behave that way (the idea is that we may want to make a `purchasePayment` call fail but still allow the `get_payment_info` call to return.
 
 The json body for the call supports the following:
 
-* `CONFIGURE_ACTION`: {`ACTION_THROW_EXCEPTION`|`ACTION_RETURN_NIL`|`ACTION_SLEEP`|`ACTION_RESET`}
+* `CONFIGURE_ACTION`: {`ACTION_THROW_EXCEPTION`|`RETURN_NIL`|`ACTION_SLEEP`|`ACTION_RESET`}
 * `SLEEP_TIME_SEC`: (valid for `CONFIGURE_ACTION` = `ACTION_SLEEP`
 * `METHODS`: The payment plugin api methods for which the configuration apply (or all methods if not specified)
 
 Examples:
 
-This will confgure the plugin to return an payment error on each `purchase_payment` call (note that the name of the methods come from the definition of the [payment plugin api](https://github.com/killbill/killbill-plugin-api/blob/master/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java):
+This will confgure the plugin to return an payment error on each `purchasePayment` call (note that the name of the methods come from the definition of the [payment plugin api](https://github.com/killbill/killbill-plugin-api/blob/master/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java):
 
 ```
 curl -v \
@@ -61,7 +61,7 @@ curl -v \
 -H "Content-Type: application/json" \
 -H 'X-Killbill-CreatedBy: stephane' \
 -X POST \
---data-binary '{"CONFIGURE_ACTION":"ACTION_RETURN_PLUGIN_STATUS_ERROR", "METHODS":"purchase_payment"}' \
+--data-binary '{"CONFIGURE_ACTION":"ACTION_RETURN_PLUGIN_STATUS_ERROR", "METHODS":"purchasePayment"}' \
  -v 'http://127.0.0.1:8080/plugins/killbill-payment-test/configure'
 ```
 
