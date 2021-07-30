@@ -18,7 +18,7 @@ Kill Bill compatibility
 Requirements
 -----------------------
 
-The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/30ce16c871780ac70d3606b0cb34eb998060a89e/src/main/resources/ddl.sql).
+The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/master/src/main/resources/ddl.sql).
 
 Usage
 -----
