@@ -20,11 +20,9 @@
 package org.killbill.billing.plugin.payment.dao.gen.tables.records;
 
 
+import javax.annotation.Generated;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
@@ -529,7 +527,73 @@ public class TestpaymentResponsesRecord extends UpdatableRecordImpl<TestpaymentR
         return this;
     }
 
-    // -------------------------------------------------------------------------
+
+	@Override
+	public ULong component1() {
+		return getRecordId();
+	}
+
+
+	@Override
+	public String component2() {
+		return getStatus();
+	}
+
+
+	@Override
+	public String component3() {
+		return getKbAccountId();
+	}
+
+
+	@Override
+	public String component4() {
+		return getKbPaymentId();
+	}
+
+
+	@Override
+	public String component5() {
+		return getKbPaymentTransactionId();
+	}
+
+
+	@Override
+	public String component6() {
+		return getTransactionType();
+	}
+
+
+	@Override
+	public BigDecimal component7() {
+		return getAmount();
+	}
+
+
+	@Override
+	public String component8() {
+		return getCurrency();
+	}
+
+
+	@Override
+	public String component9() {
+		return getAdditionalData();
+	}
+
+
+	@Override
+	public Timestamp component10() {
+		return getCreatedDate();
+	}
+
+
+	@Override
+	public String component11() {
+		return getKbTenantId();
+	}
+
+	// -------------------------------------------------------------------------
     // Constructors
     // -------------------------------------------------------------------------
 

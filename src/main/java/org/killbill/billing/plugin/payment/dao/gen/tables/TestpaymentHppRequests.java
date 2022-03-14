@@ -20,12 +20,10 @@
 package org.killbill.billing.plugin.payment.dao.gen.tables;
 
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Schema;

@@ -58,7 +58,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
     private final Logger         LOGGER  = LoggerFactory.getLogger(PaymentTestPluginApi.class);
     private final PaymentTestDao dao;
     private final TestingStates  testingStates;
-    private final Integer        noSleep = new Integer(0);
+    private final Integer        noSleep = 0;
 
     public PaymentTestPluginApi(final OSGIKillbillAPI killbillAPI,
                                 final OSGIConfigPropertiesService configProperties,
@@ -66,7 +66,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                 final Clock clock,
                                 final PaymentTestDao dao,
                                 final TestingStates testingStates) {
-        super(killbillAPI, configProperties, logService, clock, dao);
+        super(killbillAPI, configProperties, clock, dao);
         this.dao = dao;
         this.testingStates = testingStates;
     }
@@ -158,7 +158,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         if (sleep > 0) {
             try {
                 this.LOGGER.info("sleeping in " + methodCalled + " for " + sleep + "(s)");
-                Thread.sleep(sleep * 1000000);
+                Thread.sleep(sleep * 1000000L);
             }
             catch (final InterruptedException ignore) {
             }

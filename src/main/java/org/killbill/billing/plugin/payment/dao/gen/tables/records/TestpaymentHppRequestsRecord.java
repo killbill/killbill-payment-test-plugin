@@ -20,10 +20,8 @@
 package org.killbill.billing.plugin.payment.dao.gen.tables.records;
 
 
-import java.sql.Timestamp;
-
 import javax.annotation.Generated;
-
+import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
@@ -408,7 +406,55 @@ public class TestpaymentHppRequestsRecord extends UpdatableRecordImpl<Testpaymen
         return this;
     }
 
-    // -------------------------------------------------------------------------
+
+	@Override
+	public ULong component1() {
+		return getRecordId();
+	}
+
+
+	@Override
+	public String component2() {
+		return getKbAccountId();
+	}
+
+
+	@Override
+	public String component3() {
+		return getKbPaymentId();
+	}
+
+
+	@Override
+	public String component4() {
+		return getKbPaymentTransactionId();
+	}
+
+
+	@Override
+	public String component5() {
+		return getSessionId();
+	}
+
+
+	@Override
+	public String component6() {
+		return getAdditionalData();
+	}
+
+
+	@Override
+	public Timestamp component7() {
+		return getCreatedDate();
+	}
+
+
+	@Override
+	public String component8() {
+		return getKbTenantId();
+	}
+
+	// -------------------------------------------------------------------------
     // Constructors
     // -------------------------------------------------------------------------
 

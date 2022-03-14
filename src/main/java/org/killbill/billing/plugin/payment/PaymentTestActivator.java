@@ -52,7 +52,6 @@ public class PaymentTestActivator extends KillbillActivatorBase {
 
         final PluginApp pluginApp = new PluginAppBuilder(PLUGIN_NAME,
                                                          this.killbillAPI,
-                                                         this.logService,
                                                          this.dataSource,
                                                          this.clock,
                                                          this.configProperties).withRouteClass(PaymentTestResource.class)

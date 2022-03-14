@@ -117,9 +117,9 @@ public class PaymentTestPluginApiDBTest {
                                                         this.tenantId,
                                                         kbPaymentId);
         Assert.assertEquals(responses.size(), 1);
-        Assert.assertTrue(responses.get(0).getKbPaymentId().compareTo(kbPaymentId) == 0);
-        Assert.assertTrue(responses.get(0).getKbTransactionPaymentId().compareTo(kbPaymentMethodId) == 0);
-        Assert.assertTrue(responses.get(0).getAmount().compareTo(BigDecimal.TEN) == 0);
+		Assert.assertEquals(responses.get(0).getKbPaymentId().compareTo(kbPaymentId), 0);
+		Assert.assertEquals(responses.get(0).getKbTransactionPaymentId().compareTo(kbPaymentMethodId), 0);
+		Assert.assertEquals(responses.get(0).getAmount().compareTo(BigDecimal.TEN), 0);
         Assert.assertEquals(responses.get(0).getCurrency(), Currency.EUR);
     }
 }
