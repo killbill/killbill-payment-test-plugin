@@ -40,8 +40,6 @@
     <properties>
         <check.fail-spotbugs>true</check.fail-spotbugs>
         <check.spotbugs-exclude-filter-file>spotbugs-exclude.xml</check.spotbugs-exclude-filter-file>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
         <osgi.private>org.killbill.billing.plugin.payment.*</osgi.private>
         <slf4j-api.version>1.7.36</slf4j-api.version>
     </properties>
