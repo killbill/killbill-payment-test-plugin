@@ -16,8 +16,9 @@
 
 package org.killbill.billing.plugin.payment;
 
-import com.google.common.collect.ImmutableList;
-
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
 import org.killbill.billing.osgi.libs.killbill.OSGIConfigPropertiesService;
@@ -38,10 +39,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.UUID;
+import com.google.common.collect.ImmutableList;
 
 import static org.killbill.billing.plugin.payment.PaymentTestActivator.PLUGIN_NAME;
 
@@ -80,7 +78,6 @@ public class PaymentTestPluginApiTest {
         this.testingStates = new TestingStates();
         this.paymentTestPugin = new PaymentTestPluginApi(this.killbillAPI,
                                                          this.configProperties,
-                                                         this.logService,
                                                          this.clock,
                                                          this.paymentTestDao,
                                                          this.testingStates);

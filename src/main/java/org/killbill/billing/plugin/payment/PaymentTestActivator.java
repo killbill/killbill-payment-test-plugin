@@ -16,6 +16,9 @@
 
 package org.killbill.billing.plugin.payment;
 
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServlet;
+import java.util.Hashtable;
 import org.killbill.billing.osgi.api.OSGIPluginProperties;
 import org.killbill.billing.osgi.libs.killbill.KillbillActivatorBase;
 import org.killbill.billing.payment.plugin.api.PaymentPluginApi;
@@ -24,11 +27,6 @@ import org.killbill.billing.plugin.core.resources.jooby.PluginAppBuilder;
 import org.killbill.billing.plugin.payment.dao.PaymentTestDao;
 import org.killbill.billing.plugin.payment.resources.PaymentTestResource;
 import org.osgi.framework.BundleContext;
-
-import java.util.Hashtable;
-
-import javax.servlet.Servlet;
-import javax.servlet.http.HttpServlet;
 
 public class PaymentTestActivator extends KillbillActivatorBase {
     public static final String PLUGIN_NAME = "killbill-payment-test";
@@ -44,7 +42,6 @@ public class PaymentTestActivator extends KillbillActivatorBase {
 
         final PaymentTestPluginApi pluginApi = new PaymentTestPluginApi(this.killbillAPI,
                                                                         this.configProperties,
-                                                                        this.logService,
                                                                         this.clock.getClock(),
                                                                         paymentTestDao,
                                                                         testingStates);

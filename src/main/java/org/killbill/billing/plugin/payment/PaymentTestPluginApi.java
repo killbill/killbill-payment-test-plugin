@@ -16,14 +16,16 @@
 
 package org.killbill.billing.plugin.payment;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
-
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.StreamSupport;
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
 import org.killbill.billing.osgi.libs.killbill.OSGIConfigPropertiesService;
 import org.killbill.billing.osgi.libs.killbill.OSGIKillbillAPI;
-import org.killbill.billing.osgi.libs.killbill.OSGIKillbillLogService;
 import org.killbill.billing.payment.api.PaymentMethodPlugin;
 import org.killbill.billing.payment.api.PluginProperty;
 import org.killbill.billing.payment.api.TransactionType;
@@ -45,13 +47,8 @@ import org.killbill.billing.util.callcontext.TenantContext;
 import org.killbill.clock.Clock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.StreamSupport;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 
 public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResponsesRecord, TestpaymentResponses, TestpaymentPaymentMethodsRecord, TestpaymentPaymentMethods> {
 
@@ -62,7 +59,6 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
 
     public PaymentTestPluginApi(final OSGIKillbillAPI killbillAPI,
                                 final OSGIConfigPropertiesService configProperties,
-                                final OSGIKillbillLogService logService,
                                 final Clock clock,
                                 final PaymentTestDao dao,
                                 final TestingStates testingStates) {
