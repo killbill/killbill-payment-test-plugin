@@ -16,9 +16,16 @@
 
 package org.killbill.billing.plugin.payment.dao;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.jooq.impl.DSL;
 import org.killbill.billing.catalog.api.Currency;
 import org.killbill.billing.payment.api.TransactionType;
@@ -30,15 +37,7 @@ import org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentPaymentMeth
 import org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentResponses;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentPaymentMethodsRecord;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentResponsesRecord;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import javax.sql.DataSource;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import static org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentPaymentMethods.TESTPAYMENT_PAYMENT_METHODS;
 import static org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentResponses.TESTPAYMENT_RESPONSES;
@@ -75,7 +74,7 @@ public class PaymentTestDao extends PluginPaymentDao<TestpaymentResponsesRecord,
                        , infoPlugin.getTransactionType().name()
                        , infoPlugin.getAmount()
                        , infoPlugin.getCurrency().name()
-                       , toTimestamp(infoPlugin.getCreatedDate())
+                       , toLocalDateTime(infoPlugin.getCreatedDate())
                        , tenantId.toString()
                )
                .execute();
@@ -105,7 +104,10 @@ public class PaymentTestDao extends PluginPaymentDao<TestpaymentResponsesRecord,
                                            "", // gateway error code
                                            "", // firstPaymentReferenceId
                                            "", // secondPaymentReferenceId
-                                           new DateTime(record.getCreatedDate().getTime()),
+                                           new DateTime(record.getCreatedDate()
+															  .atZone(ZoneOffset.UTC)
+															  .toInstant()
+															  .toEpochMilli(), DateTimeZone.UTC),
                                            null, // effective date
                                            null)) // properties
                       .collect(Collectors.toList());

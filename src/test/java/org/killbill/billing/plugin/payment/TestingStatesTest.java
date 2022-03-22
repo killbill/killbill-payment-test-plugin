@@ -22,49 +22,49 @@ import org.testng.annotations.Test;
 
 public class TestingStatesTest {
 
-    TestingStates testingStates = new TestingStates();
+    private final TestingStates testingStates = new TestingStates();
 
     @Test
     void testAddKnownMethod() {
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "authorizePayment"), true);
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												 "authorizePayment"));
     }
 
     @Test
     void testAddUnknownMethod() {
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "dummy"), false);
+		Assert.assertFalse(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												  "dummy"));
     }
 
     @Test
     void clearAllStates() {
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "authorizePayment"), true);
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "capturePayment"), true);
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "voidPayment", 60), true);
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												 "authorizePayment"));
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												 "capturePayment"));
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												 "voidPayment", 60));
 
         Assert.assertEquals(this.testingStates.getSleeps().size(), 1);
         Assert.assertEquals(this.testingStates.getStates().size(), 2);
 
 
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_CLEAR, null), true);
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_CLEAR, null));
         Assert.assertEquals(this.testingStates.getSleeps().size(), 0);
         Assert.assertEquals(this.testingStates.getStates().size(), 0);
     }
 
     @Test
     void clearOneState() {
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
-                                                   "authorizePayment"), true);
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING,
-                                                   "capturePayment"), true);
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED,
+												 "authorizePayment"));
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_PENDING,
+												 "capturePayment"));
 
         Assert.assertEquals(this.testingStates.getStates().size(), 2);
 
 
-        Assert.assertEquals(this.testingStates.add(TestingStates.Actions.ACTION_CLEAR, "capturePayment"), true);
+		Assert.assertTrue(this.testingStates.add(TestingStates.Actions.ACTION_CLEAR, "capturePayment"));
         Assert.assertEquals(this.testingStates.getStates().size(), 1);
         Assert.assertTrue(this.testingStates.getStates()
                                             .containsValue(TestingStates.Actions.ACTION_RETURN_PLUGIN_STATUS_CANCELED));

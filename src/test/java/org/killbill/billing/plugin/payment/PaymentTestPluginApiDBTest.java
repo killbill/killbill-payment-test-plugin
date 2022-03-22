@@ -16,6 +16,10 @@
 
 package org.killbill.billing.plugin.payment;
 
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
 import org.killbill.billing.osgi.libs.killbill.OSGIConfigPropertiesService;
@@ -34,11 +38,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.UUID;
 
 import static org.killbill.billing.plugin.payment.PaymentTestActivator.PLUGIN_NAME;
 
@@ -88,7 +87,6 @@ public class PaymentTestPluginApiDBTest {
         this.testingStates = new TestingStates();
         this.paymentTestPugin = new PaymentTestPluginApi(this.killbillAPI,
                                                          this.configProperties,
-                                                         this.logService,
                                                          this.clock,
                                                          this.paymentTestDao,
                                                          this.testingStates);
@@ -117,9 +115,9 @@ public class PaymentTestPluginApiDBTest {
                                                         this.tenantId,
                                                         kbPaymentId);
         Assert.assertEquals(responses.size(), 1);
-        Assert.assertTrue(responses.get(0).getKbPaymentId().compareTo(kbPaymentId) == 0);
-        Assert.assertTrue(responses.get(0).getKbTransactionPaymentId().compareTo(kbPaymentMethodId) == 0);
-        Assert.assertTrue(responses.get(0).getAmount().compareTo(BigDecimal.TEN) == 0);
+		Assert.assertEquals(responses.get(0).getKbPaymentId().compareTo(kbPaymentId), 0);
+		Assert.assertEquals(responses.get(0).getKbTransactionPaymentId().compareTo(kbPaymentMethodId), 0);
+		Assert.assertEquals(responses.get(0).getAmount().compareTo(BigDecimal.TEN), 0);
         Assert.assertEquals(responses.get(0).getCurrency(), Currency.EUR);
     }
 }

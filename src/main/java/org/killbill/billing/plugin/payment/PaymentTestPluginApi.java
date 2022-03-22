@@ -16,14 +16,16 @@
 
 package org.killbill.billing.plugin.payment;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
-
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.StreamSupport;
 import org.joda.time.DateTime;
 import org.killbill.billing.catalog.api.Currency;
 import org.killbill.billing.osgi.libs.killbill.OSGIConfigPropertiesService;
 import org.killbill.billing.osgi.libs.killbill.OSGIKillbillAPI;
-import org.killbill.billing.osgi.libs.killbill.OSGIKillbillLogService;
 import org.killbill.billing.payment.api.PaymentMethodPlugin;
 import org.killbill.billing.payment.api.PluginProperty;
 import org.killbill.billing.payment.api.TransactionType;
@@ -45,28 +47,22 @@ import org.killbill.billing.util.callcontext.TenantContext;
 import org.killbill.clock.Clock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.StreamSupport;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 
 public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResponsesRecord, TestpaymentResponses, TestpaymentPaymentMethodsRecord, TestpaymentPaymentMethods> {
 
     private final Logger         LOGGER  = LoggerFactory.getLogger(PaymentTestPluginApi.class);
     private final PaymentTestDao dao;
     private final TestingStates  testingStates;
-    private final Integer        noSleep = new Integer(0);
+    private final Integer        noSleep = 0;
 
     public PaymentTestPluginApi(final OSGIKillbillAPI killbillAPI,
                                 final OSGIConfigPropertiesService configProperties,
-                                final OSGIKillbillLogService logService,
                                 final Clock clock,
                                 final PaymentTestDao dao,
                                 final TestingStates testingStates) {
-        super(killbillAPI, configProperties, logService, clock, dao);
+        super(killbillAPI, configProperties, clock, dao);
         this.dao = dao;
         this.testingStates = testingStates;
     }
@@ -158,7 +154,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         if (sleep > 0) {
             try {
                 this.LOGGER.info("sleeping in " + methodCalled + " for " + sleep + "(s)");
-                Thread.sleep(sleep * 1000000);
+                Thread.sleep(sleep * 1000000L);
             }
             catch (final InterruptedException ignore) {
             }
