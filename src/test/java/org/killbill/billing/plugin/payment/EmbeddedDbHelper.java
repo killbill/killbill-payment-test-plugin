@@ -36,6 +36,9 @@ public class EmbeddedDbHelper {
     }
 
     public void startDb() throws Exception {
+        System.setProperty("org.jooq.no-logo", "true");
+        System.setProperty("org.jooq.no-tips", "true");
+
         this.embeddedDB = PlatformDBTestingHelper.get().getInstance();
         this.embeddedDB.initialize();
         this.embeddedDB.start();
