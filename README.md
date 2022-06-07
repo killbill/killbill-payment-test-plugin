@@ -25,7 +25,7 @@ Usage
 
 The plugin currently supports 3 different modes
 
-* A mode mode where the plugin can be configured on a per request basis
+* A mode where the plugin can be configured on a per request basis
 * A mode where the plugin can be configured through a private endpoint for all subsequent requests
 * A backward compatible mode for existing killbill unit test
 
