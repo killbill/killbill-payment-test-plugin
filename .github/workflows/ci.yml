@@ -14,6 +14,6 @@ jobs:
     uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@main
     with:
       plugin_name: 'payment-test'
-      integration_tests_goal: 'ci:payment-test'
+      integration_tests_goal: 'test:plugins:payment-test'
       ddl_file: 'src/main/resources/ddl.sql'
-      integration_tests_ref: 'refs/heads/integration-tests'
+      integration_tests_ref: 'refs/heads/work-for-release-0.23.x'
