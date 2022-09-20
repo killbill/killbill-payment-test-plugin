@@ -256,7 +256,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.AUTHORIZE,
                                                                                                          amount,
                                                                                                          currency,
@@ -286,7 +286,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.CAPTURE,
                                                                                                          amount,
                                                                                                          currency,
@@ -316,7 +316,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.PURCHASE,
                                                                                                          amount,
                                                                                                          currency,
@@ -344,7 +344,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.VOID,
                                                                                                          null,
                                                                                                          null,
@@ -374,7 +374,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.CREDIT,
                                                                                                          amount,
                                                                                                          currency,
@@ -404,7 +404,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            		     																				 kbTransactionId,
                                                                                                          TransactionType.REFUND,
                                                                                                          null,
                                                                                                          null,

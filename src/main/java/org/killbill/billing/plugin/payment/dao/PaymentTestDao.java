@@ -28,6 +28,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.jooq.impl.DSL;
 import org.killbill.billing.catalog.api.Currency;
+import org.killbill.billing.payment.api.PluginProperty;
 import org.killbill.billing.payment.api.TransactionType;
 import org.killbill.billing.payment.plugin.api.PaymentPluginStatus;
 import org.killbill.billing.payment.plugin.api.PaymentTransactionInfoPlugin;
@@ -38,6 +39,7 @@ import org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentResponses;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentPaymentMethodsRecord;
 import org.killbill.billing.plugin.payment.dao.gen.tables.records.TestpaymentResponsesRecord;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.collect.ImmutableList;
 
 import static org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentPaymentMethods.TESTPAYMENT_PAYMENT_METHODS;
 import static org.killbill.billing.plugin.payment.dao.gen.tables.TestpaymentResponses.TESTPAYMENT_RESPONSES;
@@ -109,7 +111,7 @@ public class PaymentTestDao extends PluginPaymentDao<TestpaymentResponsesRecord,
 															  .toInstant()
 															  .toEpochMilli(), DateTimeZone.UTC),
                                            null, // effective date
-                                           null)) // properties
+                                           ImmutableList.<PluginProperty>of())) // properties
                       .collect(Collectors.toList());
         }
     }
