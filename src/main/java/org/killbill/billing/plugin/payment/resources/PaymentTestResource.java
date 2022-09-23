@@ -51,15 +51,17 @@ public class PaymentTestResource {
     public Result configure(@Body final Payload payload) {
 
         final boolean added;
-
-        if (payload.getSeepTime() != 0) {
-            added = this.testingStates.add(TestingStates.Actions.valueOf(payload.getAction()),
-                                           payload.getMethods(),
-                                           payload.getSeepTime());
-        }
-        else {
-            added = this.testingStates.add(TestingStates.Actions.valueOf(payload.getAction()),
-                                           payload.getMethods());
+        final TestingStates.Actions action = payload.getAction() != null ? TestingStates.Actions.valueOf(payload.getAction()) : null;
+        
+        if (payload.getSleepTime() == 0 && payload.getAmount() == null) {
+        	 added = this.testingStates.add(action,
+                     payload.getMethods());
+        } else {
+        	
+        	added = this.testingStates.add(action, 
+					   payload.getMethods(), 
+					   payload.getSleepTime(),
+					   payload.getAmount());
         }
 
         if (!added) {

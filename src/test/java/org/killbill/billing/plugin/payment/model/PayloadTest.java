@@ -22,6 +22,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class PayloadTest {
 
@@ -35,7 +36,9 @@ public class PayloadTest {
         final Payload payload = objectMapper.readValue(json, Payload.class);
 
         Assert.assertEquals("action", payload.getAction());
-        Assert.assertEquals(13, payload.getSeepTime());
+        Assert.assertEquals(13, payload.getSleepTime());
+        Assert.assertNull(payload.getAmount());
+        Assert.assertNull(payload.getMethods());
     }
 
     @Test
@@ -49,5 +52,35 @@ public class PayloadTest {
 
         Assert.assertEquals("action", payload.getAction());
     }
+    
+    @Test
+    public void testAmount() throws IOException {
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        final String json = "{\"CONFIGURE_ACTION\":\"action\", \"AMOUNT\": 10}";
+
+        final Payload payload = objectMapper.readValue(json, Payload.class);
+
+        Assert.assertEquals("action", payload.getAction());
+        Assert.assertEquals(payload.getAmount().compareTo(BigDecimal.TEN), 0);
+        Assert.assertEquals(payload.getSleepTime(), 0);
+        Assert.assertNull(payload.getMethods());
+    }    
+    
+    @Test
+    public void testMethodAndAmount() throws IOException {
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        final String json = "{\"METHODS\":\"purchasePayment\", \"AMOUNT\": 10}";
+
+        final Payload payload = objectMapper.readValue(json, Payload.class);
+        
+        Assert.assertEquals(payload.getAmount().compareTo(BigDecimal.TEN), 0);
+        Assert.assertEquals("purchasePayment", payload.getMethods());
+        Assert.assertEquals(payload.getSleepTime(), 0);
+        Assert.assertNull(payload.getAction());
+    }      
 
 }

@@ -19,6 +19,7 @@ package org.killbill.billing.plugin.payment;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +30,9 @@ import javax.annotation.Nullable;
 
 public class TestingStates {
 
-    public static final String      SLEEP_PLUGIN_CONFIG_PARAM = "sleepFor";
-    private final       Set<String> allowedMethods;
+    public static final String SLEEP_PLUGIN_CONFIG_PARAM = "sleepFor";
+    public static final String AMOUNT_PLUGIN_CONFIG_PARAM = "amount";
+    private final Set<String> allowedMethods;
 
     public enum Actions {
         ACTION_RETURN_PLUGIN_STATUS_PENDING,
@@ -49,10 +51,15 @@ public class TestingStates {
     // key is method, "*" is for any method
     @JsonSerialize
     private final Map<String, Integer> sleeps;
+    
+    // key is method, "*" is for any method
+    @JsonSerialize
+    private final Map<String, BigDecimal> amounts;    
 
     public TestingStates() {
         this.states = new HashMap<>();
         this.sleeps = new HashMap<>();
+        this.amounts = new HashMap<>();
 
         final Class cls = PaymentTestPluginApi.class;
         final Method[] methods = cls.getMethods();
@@ -67,15 +74,21 @@ public class TestingStates {
                 return false;
             }
         }
-
+        
+        if (action == null) {
+        	return false;
+        }
+        
         if (action.compareTo(Actions.ACTION_CLEAR) == 0) {
             if (forMethod == null) {
                 this.states.clear();
                 this.sleeps.clear();
+                this.amounts.clear();
             }
             else {
                 this.states.remove(forMethod);
                 this.sleeps.remove(forMethod);
+                this.amounts.remove(forMethod);
             }
         }
         else {
@@ -84,8 +97,8 @@ public class TestingStates {
         }
         return true;
     }
-
-    public boolean add(final Actions action, @Nullable final String forMethod, final int sleep) {
+    
+    public boolean add(final Actions action, @Nullable final String forMethod, final int sleep, final BigDecimal amount) {
 
         if (forMethod != null) {
             if (this.allowedMethods.contains(forMethod) == false) {
@@ -93,9 +106,19 @@ public class TestingStates {
             }
         }
         final String method = (forMethod != null) ? forMethod : "*";
-        this.sleeps.put(method, sleep);
+        if(action != null) {
+        	this.add(action, forMethod);
+        }
+        if(sleep != 0) {
+        	this.sleeps.put(method, sleep);
+        }
+        if (amount != null) {
+        	this.amounts.put(method, amount);
+        }
+        
+        
         return true;
-    }
+    }    
 
     public Map<String, Actions> getStates() {
         return this.states;
@@ -103,5 +126,9 @@ public class TestingStates {
 
     public Map<String, Integer> getSleeps() {
         return this.sleeps;
+    }
+    
+    public Map<String, BigDecimal> getAmounts() {
+        return this.amounts;
     }
 }

@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_ABSENT;
 
+import java.math.BigDecimal;
+
 
 @JsonInclude(NON_ABSENT)
 public class Payload {
@@ -29,14 +31,17 @@ public class Payload {
     private final String action;
     private final String methods;
     private final int    sleepTime;
+    private final BigDecimal amount;
 
     @JsonCreator
     public Payload(@JsonProperty("CONFIGURE_ACTION") final String action,
                    @JsonProperty("METHODS") final String methods,
-                   @JsonProperty("SLEEP_TIME_SEC") final int sleepTime) {
+                   @JsonProperty("SLEEP_TIME_SEC") final int sleepTime,
+                   @JsonProperty("AMOUNT") final BigDecimal amount) {
         this.action = action;
         this.methods = methods;
         this.sleepTime = sleepTime;
+        this.amount = amount;
     }
 
     public String getAction() {
@@ -45,7 +50,11 @@ public class Payload {
 
     public String getMethods() { return this.methods;}
 
-    public int getSeepTime() {
+    public int getSleepTime() {
         return this.sleepTime;
     }
+    
+    public BigDecimal getAmount() {
+        return this.amount;
+    }    
 }
