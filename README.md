@@ -82,7 +82,7 @@ curl -v \
 -H "Content-Type: application/json" \
 -H 'X-Killbill-CreatedBy: stephane' \
 -X POST \
---data-binary '{"METHODS":"purchasePayment", "AMOUNT":"20"}' \
+--data-binary '{"METHODS":"purchasePayment", "AMOUNT":"10"}' \
  -v 'http://127.0.0.1:8080/plugins/killbill-payment-test/configure' 
  ```
  

@@ -255,9 +255,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
     }
 
 
-    private void insertPaymentResponse(final UUID kbAccountId,
-                                       final UUID tenantId,
-                                       final PluginPaymentTransactionInfoPlugin infoPlugin) throws PaymentPluginApiException {
+    private void insertPaymentResponse(final UUID kbAccountId, final UUID tenantId, final PluginPaymentTransactionInfoPlugin infoPlugin) throws PaymentPluginApiException {
         try {
             this.dao.addPaymentResponse(kbAccountId, tenantId, infoPlugin);
         }
