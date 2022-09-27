@@ -2,14 +2,13 @@ name: ci
 
 on:
   push:
+  pull_request:
+  workflow_dispatch:
     inputs:
       jdk-matrix:
         description: 'jdk matrix as json array'
         required: false
-        default: '[ "11" ]'  
-  pull_request:
-  workflow_dispatch:
-
+        default: '[ "11" ]'
 
 jobs:
   ci:
@@ -17,3 +16,5 @@ jobs:
     with:
       test-profile-matrix: '[ "travis"]'
       failure-upload-path: 'target/*'
+      jdk-matrix: '[ "11"]'
+   
