@@ -10,3 +10,4 @@ jobs:
     uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
     with:
       test-profile-matrix: '[ "travis"]'
+      failure-upload-path: 'target/*'
