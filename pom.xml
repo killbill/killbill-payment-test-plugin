@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.kill-bill.billing</groupId>
         <artifactId>killbill-oss-parent</artifactId>
-        <version>0.144.79</version>
+        <version>0.144.84</version>
     </parent>
     <groupId>org.kill-bill.billing.plugin.java</groupId>
     <artifactId>payment-test-plugin</artifactId>
@@ -41,7 +41,6 @@
         <check.fail-spotbugs>true</check.fail-spotbugs>
         <check.spotbugs-exclude-filter-file>spotbugs-exclude.xml</check.spotbugs-exclude-filter-file>
         <osgi.private>org.killbill.billing.plugin.payment.*</osgi.private>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
     </properties>
     <dependencies>
         <dependency>
@@ -87,6 +86,12 @@
             <artifactId>jooq</artifactId>
             <!-- 3.14.0 broke returning() on MySQL :( -->
             <version>3.13.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.kill-bill.billing</groupId>
