@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      jdk-matrix:
+        description: 'jdk matrix as json array'
+        required: false
+        default: '[ "11" ]'
+
+jobs:
+  ci:
+    uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
+    with:
+      test-profile-matrix: '[ "travis"]'
+      failure-upload-path: 'target/*'
+      jdk-matrix: '[ "11"]'
+   
