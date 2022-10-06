@@ -84,8 +84,6 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <!-- 3.14.0 broke returning() on MySQL :( -->
-            <version>3.13.5</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
