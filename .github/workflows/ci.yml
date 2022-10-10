@@ -1,14 +1,22 @@
 name: ci
 
 on:
-  - push
-  - workflow_dispatch
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      jdk-matrix:
+        description: 'jdk matrix as json array'
+        required: false
+        default: '[ "11" ]'
 
 jobs:
   ci:
     uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
     with:
       test-profile-matrix: '[ "travis", "integration-mysql", "integration-postgresql" ]'
+      failure-upload-path: 'target/*'
+      jdk-matrix: '[ "11"]'      
 
   integration_test:
     uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@main
