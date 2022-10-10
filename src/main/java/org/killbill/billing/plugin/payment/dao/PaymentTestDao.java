@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -109,7 +110,7 @@ public class PaymentTestDao extends PluginPaymentDao<TestpaymentResponsesRecord,
 															  .toInstant()
 															  .toEpochMilli(), DateTimeZone.UTC),
                                            null, // effective date
-                                           null)) // properties
+                                           Collections.emptyList())) // properties
                       .collect(Collectors.toList());
         }
     }

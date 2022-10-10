@@ -145,6 +145,28 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         }
         return sleep;
     }
+    
+    @VisibleForTesting
+    BigDecimal getAmount(final Iterable<PluginProperty> pluginProperties) {
+    	final String methodCalled = Thread.currentThread().getStackTrace()[2].getMethodName();
+        BigDecimal amount = null;
+        if (pluginProperties != null) { 
+        	 // find amount
+        	amount = StreamSupport.stream(pluginProperties.spliterator(), false)
+		              .filter(property -> property.getKey().equals(TestingStates.AMOUNT_PLUGIN_CONFIG_PARAM)) //check for plugin property 
+		              .findFirst().map(property -> new BigDecimal((String)property.getValue())).orElse(null); //get value if property is present
+        	
+        }
+        if (amount == null) {
+            // look for amount in global config
+            final BigDecimal globalAmount = (this.testingStates.getAmounts().get(methodCalled) != null)
+                    ? this.testingStates.getAmounts().get(methodCalled) : this.testingStates.getAmounts().get("*");
+            if (globalAmount != null) { // && globalSleep.compareTo(this.noSleep) > 0
+                amount = globalAmount;
+            }
+        }
+        return amount;
+    }    
 
     private PaymentPluginStatus handleState(final Iterable<PluginProperty> pluginProperties) throws PaymentPluginApiException {
         final String methodCalled = Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -233,9 +255,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
     }
 
 
-    private void insertPaymentResponse(final UUID kbAccountId,
-                                       final UUID tenantId,
-                                       final PluginPaymentTransactionInfoPlugin infoPlugin) throws PaymentPluginApiException {
+    private void insertPaymentResponse(final UUID kbAccountId, final UUID tenantId, final PluginPaymentTransactionInfoPlugin infoPlugin) throws PaymentPluginApiException {
         try {
             this.dao.addPaymentResponse(kbAccountId, tenantId, infoPlugin);
         }
@@ -255,10 +275,13 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                          final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
+        	final BigDecimal configuredAmount = getAmount(properties);
+        	final BigDecimal amountToUse = configuredAmount != null ? configuredAmount : amount;
+        	
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.AUTHORIZE,
-                                                                                                         amount,
+                                                                                                         amountToUse,
                                                                                                          currency,
                                                                                                          pluginStatus,
                                                                                                          null,
@@ -285,10 +308,13 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                        final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
-            final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+        	final BigDecimal configuredAmount = getAmount(properties);
+        	final BigDecimal amountToUse = configuredAmount != null ? configuredAmount : amount;        	
+
+        	final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.CAPTURE,
-                                                                                                         amount,
+                                                                                                         amountToUse,
                                                                                                          currency,
                                                                                                          pluginStatus,
                                                                                                          null,
@@ -315,10 +341,13 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                         final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
+        	final BigDecimal configuredAmount = getAmount(properties);
+        	final BigDecimal amountToUse = configuredAmount != null ? configuredAmount : amount;
+        	
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.PURCHASE,
-                                                                                                         amount,
+                                                                                                         amountToUse,
                                                                                                          currency,
                                                                                                          pluginStatus,
                                                                                                          null,
@@ -344,7 +373,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.VOID,
                                                                                                          null,
                                                                                                          null,
@@ -373,10 +402,13 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
                                                       final CallContext context) throws PaymentPluginApiException {
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
+        	final BigDecimal configuredAmount = getAmount(properties);
+        	final BigDecimal amountToUse = configuredAmount != null ? configuredAmount : amount;
+        	
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            																							 kbTransactionId,
                                                                                                          TransactionType.CREDIT,
-                                                                                                         amount,
+                                                                                                         amountToUse,
                                                                                                          currency,
                                                                                                          pluginStatus,
                                                                                                          null,
@@ -404,7 +436,7 @@ public class PaymentTestPluginApi extends PluginPaymentPluginApi<TestpaymentResp
         final PaymentPluginStatus pluginStatus = handleState(properties);
         if (pluginStatus != null) {
             final PluginPaymentTransactionInfoPlugin infoPlugin = new PluginPaymentTransactionInfoPlugin(kbPaymentId,
-                                                                                                         kbPaymentMethodId,
+            		     																				 kbTransactionId,
                                                                                                          TransactionType.REFUND,
                                                                                                          null,
                                                                                                          null,

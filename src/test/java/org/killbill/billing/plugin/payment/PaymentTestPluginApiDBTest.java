@@ -97,11 +97,12 @@ public class PaymentTestPluginApiDBTest {
         final UUID kbPaymentId = UUID.randomUUID();
         //        final UUID kbTransactionId = UUID.randomUUID();
         final UUID kbPaymentMethodId = UUID.randomUUID();
+        final UUID kbTransactionId = UUID.randomUUID();
 
         final PaymentTransactionInfoPlugin ret = this.paymentTestPugin.authorizePayment(
                 this.accountId,
                 kbPaymentId,
-                UUID.randomUUID(),
+                kbTransactionId,
                 kbPaymentMethodId,
                 BigDecimal.TEN,
                 Currency.EUR,
@@ -116,7 +117,7 @@ public class PaymentTestPluginApiDBTest {
                                                         kbPaymentId);
         Assert.assertEquals(responses.size(), 1);
 		Assert.assertEquals(responses.get(0).getKbPaymentId().compareTo(kbPaymentId), 0);
-		Assert.assertEquals(responses.get(0).getKbTransactionPaymentId().compareTo(kbPaymentMethodId), 0);
+		Assert.assertEquals(responses.get(0).getKbTransactionPaymentId().compareTo(kbTransactionId), 0);
 		Assert.assertEquals(responses.get(0).getAmount().compareTo(BigDecimal.TEN), 0);
         Assert.assertEquals(responses.get(0).getCurrency(), Currency.EUR);
     }
