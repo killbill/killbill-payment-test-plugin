@@ -20,28 +20,6 @@
         <Class name="~org\.killbill\.billing\.plugin\.payment\.dao\.gen.*"/>
     </Match>
     <Match>
-        <Class name="org.killbill.billing.plugin.payment.TestingStates"/>
-        <Field name="sleeps"/>
-    </Match> 
-    <Match>
-        <Class name="org.killbill.billing.plugin.payment.TestingStates"/>
-        <Field name="states"/>
-    </Match> 
-    <Match>
-        <Class name="org.killbill.billing.plugin.payment.TestingStates"/>
-        <Field name="amounts"/>
-    </Match>  
-    <Match>
-        <Class name="org.killbill.billing.plugin.payment.resources.PaymentTestResource"/>
-        <Field name="testingStates"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
     </Match>
-    <Match>
-        <Class name="org.killbill.billing.plugin.payment.PaymentTestPluginApi"/>
-        <Field name="testingStates"/>
-    </Match>    
-    <Match>
-        <Class name="org.killbill.billing.plugin.payment.PaymentTestPluginApi"/>
-        <Field name="dao"/>
-    </Match>    
-    
 </FindBugsFilter>
