@@ -61,9 +61,14 @@
             <artifactId>guava</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <scope>provided</scope>
+            <groupId>io.airlift</groupId>
+            <artifactId>testing-mysql-server</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.airlift</groupId>
+            <artifactId>testing-postgresql-server</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
