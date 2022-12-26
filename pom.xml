@@ -40,7 +40,6 @@
     <properties>
         <check.fail-spotbugs>true</check.fail-spotbugs>
         <check.spotbugs-exclude-filter-file>spotbugs-exclude.xml</check.spotbugs-exclude-filter-file>
-        <killbill-base-plugin.version>5.0.0-14752c2-SNAPSHOT</killbill-base-plugin.version>
         <osgi.private>org.killbill.billing.plugin.payment.*</osgi.private>
     </properties>
     <dependencies>
