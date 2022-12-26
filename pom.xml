@@ -23,7 +23,7 @@
     </parent>
     <groupId>org.kill-bill.billing.plugin.java</groupId>
     <artifactId>payment-test-plugin</artifactId>
-    <version>8.0.0-SNAPSHOT</version>
+    <version>8.0.0</version>
     <packaging>bundle</packaging>
     <name>Kill Bill Payment Test plugin</name>
     <description>Kill Bill Payment Test plugin</description>
@@ -31,6 +31,7 @@
     <scm>
         <connection>scm:git:git://github.com/killbill/killbill-payment-test-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:killbill/killbill-payment-test-plugin.git</developerConnection>
+        <tag>payment-test-plugin-8.0.0</tag>
         <url>http://github.com/killbill/killbill-payment-test-plugin/tree/master</url>
     </scm>
     <issueManagement>
