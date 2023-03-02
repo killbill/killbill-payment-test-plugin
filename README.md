@@ -21,6 +21,20 @@ Requirements
 
 The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/master/src/main/resources/ddl.sql).
 
+## Build
+
+```
+mvn clean install
+```
+
+## Installation
+
+Locally:
+
+```
+kpm install_java_plugin payment-test-plugin --from-source-file target/payment-test-plugin-*-SNAPSHOT.jar --destination /var/tmp/bundles
+```
+
 Usage
 -----
 
