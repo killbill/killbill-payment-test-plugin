@@ -1,4 +1,5 @@
 # killbill-payment-test-plugin
+![Maven Central](https://img.shields.io/maven-central/v/org.kill-bill.billing.plugin.java/payment-test-plugin?color=blue&label=Maven%20Central)
 
 Plugin to test the Kill Bill PaymentPlugin API.
 
