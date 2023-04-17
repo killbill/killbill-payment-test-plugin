@@ -1,4 +1,5 @@
 # killbill-payment-test-plugin
+![Maven Central](https://img.shields.io/maven-central/v/org.kill-bill.billing.plugin.java/payment-test-plugin?color=blue&label=Maven%20Central)
 
 Plugin to test the Kill Bill PaymentPlugin API.
 
@@ -20,6 +21,20 @@ Requirements
 -----------------------
 
 The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/master/src/main/resources/ddl.sql).
+
+## Build
+
+```
+mvn clean install
+```
+
+## Installation
+
+Locally:
+
+```
+kpm install_java_plugin payment-test-plugin --from-source-file target/payment-test-plugin-*-SNAPSHOT.jar --destination /var/tmp/bundles
+```
 
 Usage
 -----
