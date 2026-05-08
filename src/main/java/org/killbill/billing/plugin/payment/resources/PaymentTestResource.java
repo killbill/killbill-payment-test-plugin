@@ -26,8 +26,8 @@ import org.jooby.mvc.Path;
 import org.killbill.billing.plugin.payment.TestingStates;
 import org.killbill.billing.plugin.payment.model.Payload;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 @Path("/")
