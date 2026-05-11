@@ -4,20 +4,10 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-    inputs:
-      jdk-matrix:
-        description: 'jdk matrix as json array'
-        required: false
-        default: '[ "11" ]'
 
 jobs:
-  ci:
-    uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
-
-  integration_test:
-    uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@main
-    with:
-      plugin_name: 'payment-test'
-      integration_tests_goal: 'test:plugins:payment-test'
-      ddl_file: 'src/main/resources/ddl.sql'
-      integration_tests_ref: 'refs/heads/master'
+  snapshot:
+    uses: killbill/gh-actions-shared/.github/workflows/snapshot.yml@java21
+    secrets:
+      MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
