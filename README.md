@@ -21,7 +21,9 @@ Kill Bill compatibility
 Requirements
 -----------------------
 
-The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/master/src/main/resources/ddl.sql).
+The plugin needs a database. The latest version of the schema can be found [here](https://github.com/killbill/killbill-payment-test-plugin/blob/master/src/main/resources/ddl.sql). 
+
+Version `9.x.y` mark of removal Java EE `javax` namespace and use `jakarta` namespace instead.
 
 ## Build
 
