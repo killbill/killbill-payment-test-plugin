@@ -16,8 +16,8 @@
 
 package org.killbill.billing.plugin.payment;
 
-import javax.servlet.Servlet;
-import javax.servlet.http.HttpServlet;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.http.HttpServlet;
 import java.util.Hashtable;
 import org.killbill.billing.osgi.api.OSGIPluginProperties;
 import org.killbill.billing.osgi.libs.killbill.KillbillActivatorBase;

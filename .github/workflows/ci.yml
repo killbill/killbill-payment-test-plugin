@@ -8,14 +8,14 @@ on:
       jdk-matrix:
         description: 'jdk matrix as json array'
         required: false
-        default: '[ "11" ]'
+        default: '[ "21" ]'
 
 jobs:
   ci:
-    uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
+    uses: killbill/gh-actions-shared/.github/workflows/ci.yml@java21
 
   integration_test:
-    uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@main
+    uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@java21
     with:
       plugin_name: 'payment-test'
       integration_tests_goal: 'test:plugins:payment-test'
