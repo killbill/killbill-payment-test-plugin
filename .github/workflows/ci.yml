@@ -8,11 +8,14 @@ on:
       jdk-matrix:
         description: 'jdk matrix as json array'
         required: false
-        default: '[ "11" ]'
+        default: '[ "21" ]'
 
 jobs:
   ci:
     uses: killbill/gh-actions-shared/.github/workflows/ci.yml@main
+    secrets:
+      CLOUDSMITH_CENTRAL_PASSWORD: ${{ secrets.CLOUDSMITH_CENTRAL_PASSWORD }}
+      CLOUDSMITH_KILLBILL_MAVEN_REPO_PASSWORD: ${{ secrets.CLOUDSMITH_KILLBILL_MAVEN_REPO_PASSWORD }}
 
   integration_test:
     uses: killbill/gh-actions-shared/.github/workflows/integration_test.yml@main
@@ -21,3 +24,6 @@ jobs:
       integration_tests_goal: 'test:plugins:payment-test'
       ddl_file: 'src/main/resources/ddl.sql'
       integration_tests_ref: 'refs/heads/master'
+    secrets:
+      CLOUDSMITH_CENTRAL_PASSWORD: ${{ secrets.CLOUDSMITH_CENTRAL_PASSWORD }}
+      CLOUDSMITH_KILLBILL_MAVEN_REPO_PASSWORD: ${{ secrets.CLOUDSMITH_KILLBILL_MAVEN_REPO_PASSWORD }}
